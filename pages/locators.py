@@ -6,3 +6,10 @@ class LoginPageLocators:
 
 class ProjectsPageLocators:
     PROJECTS_GRID_CSS = "div .k-grid"
+
+
+class EditPageLocators:
+    MANAGER_INPUT = "#rw_2_input .rw-widget-input"
+    MANAGER_LIST_ITEM = "#rw_2_input li.rw-list-option"
+    PROJECT_MANAGER_INPUT = "#rw_3_input .rw-widget-input"
+    PROJECT_MANAGER_LIST_ITEM = "#rw_3_input li.rw-list-option"

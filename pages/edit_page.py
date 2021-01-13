@@ -1,14 +1,19 @@
 from pypom import Page
+from .locators import EditPageLocators as locators
 import time
 
 
 class EditPage(Page):
     def set_manager(self):
-        manager_option = self.driver.find_by_class('.form-group')[2]
-        manager_option.find_by_css_selector('div[role="combobox"]').click()
-        time.sleep(1)
-        manager_option.find_by_css_selector('li.rw-list-option:last-of-type').click()
-        time.sleep(1)
+        if self.driver.is_element_present_by_css(locators.MANAGER_INPUT):
+            self.driver.find_by_css(locators.MANAGER_INPUT).first.click()
+        if self.driver.is_element_present_by_css(locators.MANAGER_LIST_ITEM):
+            time.sleep(1)
+            self.driver.find_by_css(locators.MANAGER_LIST_ITEM)[4].click()
 
     def set_project_manager(self):
-        pass
+        if self.driver.is_element_present_by_css(locators.PROJECT_MANAGER_INPUT):
+            self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT).first.click()
+        if self.driver.is_element_present_by_css(locators.PROJECT_MANAGER_LIST_ITEM):
+            time.sleep(1)
+            self.driver.find_by_css(locators.PROJECT_MANAGER_LIST_ITEM)[4].click()
