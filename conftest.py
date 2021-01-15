@@ -1,6 +1,8 @@
 import pytest
 from splinter import Browser
 import yaml
+import requests
+import json
 
 
 def pytest_addoption(parser):
@@ -15,9 +17,10 @@ def browser(request):
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         browser = Browser("chrome")
+        browser.driver.set_window_size(1900, 1000)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
-        browser = browser = Browser("firefox")
+        browser = Browser("firefox")
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
     yield browser
@@ -33,3 +36,14 @@ def get_config():
 @pytest.fixture(scope='session')
 def config():
     return get_config()
+
+
+@pytest.fixture(scope='session')
+def login(config):
+    """получение куки авторизации"""
+    request_url = config['pr']['url'] + 'api/v2/admin/panel/0/login'
+    payload = json.dumps({'Email': config['pr']['login'], 'Password': config['pr']['passwd']})
+    headers = {'Accept': config['pr']['headers']['accept'],
+               'Content-Type': config['pr']['headers']['content_type']}
+    r = requests.post(url=request_url, data=payload, headers=headers)
+    return r.cookies.get_dict()
