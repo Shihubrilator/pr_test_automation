@@ -3,6 +3,7 @@ pr:
   passwd: 111111
   url: http://qa.panelrider.com/
   project_url: http://qa.panelrider.com/admin/projects/765277185
+  template_url: https://qasawtooth.opinion.team/projects04/TestSurveyQA/cgi-bin/ciwweb.pl?studyname=TestSurveyQA&bfrid={token}
   headers:
     accept: application/json
     content_type: application/json

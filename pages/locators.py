@@ -13,3 +13,6 @@ class EditPageLocators:
     MANAGER_LIST_ITEM = "#rw_2_input li.rw-list-option"
     PROJECT_MANAGER_INPUT = "#rw_3_input .rw-widget-input"
     PROJECT_MANAGER_LIST_ITEM = "#rw_3_input li.rw-list-option"
+    URL_TEMPLATE_INPUT = 'SurveyEngineTemplateUrl'
+    INNER_NAME_INPUT = 'InnerName'
+    NAME_INPUT = 'Name'
