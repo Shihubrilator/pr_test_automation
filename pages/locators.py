@@ -16,3 +16,5 @@ class EditPageLocators:
     URL_TEMPLATE_INPUT = 'SurveyEngineTemplateUrl'
     INNER_NAME_INPUT = 'InnerName'
     NAME_INPUT = 'Name'
+    TYPE_INPUT = '.form-group:nth-child(5) .inplace-editor .dropdown-toggle'
+    TYPE_LIST_ITEM = '.form-group:nth-child(5) .dropdown-menu li'
