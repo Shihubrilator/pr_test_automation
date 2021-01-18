@@ -3,7 +3,7 @@ from pages.edit_page import EditPage
 import time
 
 
-def test_change_project_settings(browser, config):
+def test_change_project_settings(browser, config, pr_headers):
     url = config['pr']['project_url']
     login_page = LoginPage(driver=browser, base_url=url)
     login_page.open()
@@ -17,4 +17,6 @@ def test_change_project_settings(browser, config):
     page.should_be_changed_managers_name()
     page.should_be_changed_url_template(config['pr']['template_url'])
     page.should_be_changed_names()
+    # делать в тирдауне фикстуры?? какой??
+    page.set_default_settings(pr_headers, config)
     time.sleep(5)

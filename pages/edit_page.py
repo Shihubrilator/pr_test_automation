@@ -1,6 +1,8 @@
 from pypom import Page
 from .locators import EditPageLocators as locators
 import time
+import requests
+import json
 
 
 wait_time = 5
@@ -79,3 +81,9 @@ class EditPage(Page):
     def should_be_changed_name(self):
         name_value = self.driver.find_by_name(locators.NAME_INPUT)[0].value
         assert name_value == name, 'project Name expected to be equal to ' + name + 'but not'
+
+    def set_default_settings(self, headers, config):
+        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
+        payload = json.dumps(config['pr']['default_project_settings'])
+        r = requests.put(url=request_url, headers=headers, data=payload)
+        # проверить, что запрос отправился

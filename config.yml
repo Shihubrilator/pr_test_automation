@@ -3,7 +3,9 @@ pr:
   passwd: 111111
   url: http://qa.panelrider.com/
   project_url: http://qa.panelrider.com/admin/projects/765277185
+  project_id: 765277185
   template_url: https://qasawtooth.opinion.team/projects04/TestSurveyQA/cgi-bin/ciwweb.pl?studyname=TestSurveyQA&bfrid={token}
   headers:
     accept: application/json
     content_type: application/json
+  default_project_settings: {"Id":765277185,"PartnerClientId":null,"PartnerId":1029693,"ClientStaffId":null,"Name":"Новый опрос","EstimatedIR":null,"FieldCloseDT":null,"ReminderFrequency":null,"ProjectManagerId":5129884,"ProjectManagerNiceName":"Админ","ManagerId":5129884,"ManagerNiceName":"Админ","InnerName":"S-765277185","SurveyProvider":"PanelRider","ExternalId":null,"Descriptions":{"Comparer":{},"Count":0,"Keys":[],"Values":[]},"State":2,"IsSetup":false,"StudyType":0,"SurveyEngineTemplateUrl":null,"SurveyEngineTestUrl":null,"UseMultilinks":false,"SurveyEngineQuotaUrl":null,"PlannedIR":0,"PlannedCompleteCount":0,"DeadlineDT":null,"Notes":null,"Settings":{"CPICurrencySymbol":"₽","ShowTheme":true,"BrandPulseType":1,"IsBrandPulse":false,"HashSecret":"Naturwissenschaftler","SurveyEngineAdminURl":null,"SurveyDescription":null,"ShowCaptcha":1,"TechnicalRequirements":0,"AllowedDeviceTypes":0,"CPIValue":null,"Overhead":null,"CustomSettings":null},"Updated":"2021-01-15T13:20:50.9336278","Deleted":false,"LengthOfInterview":10,"Categories":[{"Id":842,"Name":null,"Description":null,"SortOrder":0,"Updated":"0001-01-01T00:00:00"}],"Collectors":[],"TotalCollectors":0,"RequestCondition":{"ConditionType":0,"Request":"{\r\n  \"DataPoints\": [\r\n    {\r\n      \"DataPoint\": 100019,\r\n      \"Type\": \"Exclude\",\r\n      \"Unknown\": \"Include\",\r\n      \"Values\": [\r\n        9,\r\n        100\r\n      ]\r\n    }\r\n  ]\r\n}","RequestError":null},"SurveyEngineAdminURl":null,"IsHidden":true,"StatusSynchronization":false,"LastSurveyAction":null,"LastSyncStatus":0,"LastSyncDT":null}

@@ -46,4 +46,12 @@ def login(config):
     headers = {'Accept': config['pr']['headers']['accept'],
                'Content-Type': config['pr']['headers']['content_type']}
     r = requests.post(url=request_url, data=payload, headers=headers)
-    return r.cookies.get_dict()
+    return r.cookies.get_dict()['authtoken']
+
+
+@pytest.fixture()
+def pr_headers(login, config):
+    """лепим хидер запроса"""
+    return {'Accept': 'application/json',
+            'Cookie': 'authtoken=' + login,
+            'Content-Type': 'application/json'}
