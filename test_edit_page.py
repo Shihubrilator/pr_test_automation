@@ -14,5 +14,5 @@ def test_change_project_settings(browser, config, pr_headers):
     page.reload()
     page.should_be_changed_settings(config['pr']['template_url'])
     # делать в тирдауне фикстуры?? какой??
-    page.set_default_settings(pr_headers, config)
+    #page.set_default_settings(pr_headers, config)
     time.sleep(5)

@@ -18,3 +18,5 @@ class EditPageLocators:
     NAME_INPUT = 'Name'
     TYPE_INPUT = '.form-group:nth-child(5) .inplace-editor .dropdown-toggle'
     TYPE_LIST_ITEM = '.form-group:nth-child(5) .dropdown-menu li'
+    DESCRIPTION_INPUT = 'SurveyDescription'
+    COMMENTS_INPUT = 'Notes'
