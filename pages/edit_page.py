@@ -12,6 +12,14 @@ class EditPage(Page):
     xpctd_type = 'Ad-hoc'
     description = 'some nice description text'
     note = 'some annoying comments'
+    device_type_text = 'Только ПК'
+    device_type_default_text = 'Все устройства'
+    device_type_show_text = 'Только мобильные'
+    device_type_show_default_text = 'Наследовать от типа устройств'
+    manager_text = 'Бот'
+    manager_default_text = 'Админ'
+    project_manager_text = 'Бот'
+    project_manager_default_text = 'Админ'
 
     def set_settings(self, changed_url):
         self.set_manager()
@@ -23,6 +31,9 @@ class EditPage(Page):
         self.set_sync()
         self.set_description()
         self.set_comments()
+        self.set_device_type()
+        self.set_device_type_show()
+        self.set_multilinks()
 
     def should_be_changed_settings(self, changed_url):
         self.should_be_changed_manager_name()
@@ -34,6 +45,9 @@ class EditPage(Page):
         self.should_be_changed_sync()
         self.should_be_changed_description()
         self.should_be_changed_comments()
+        self.should_be_changed_device_type()
+        self.should_be_changed_device_type_show()
+        self.should_be_changed_multilink()
 
     def set_manager(self):
         if self.driver.is_element_present_by_css(locators.MANAGER_INPUT, self.wait_time):
@@ -67,8 +81,8 @@ class EditPage(Page):
         self.driver.find_by_css(locators.TYPE_LIST_ITEM)[2].click()
 
     def set_sync(self):
-        if self.driver.is_element_present_by_css('.form-group:nth-child(7) .react-toggle', self.wait_time):
-            self.driver.find_by_css('.form-group:nth-child(7) .react-toggle').click()
+        if self.driver.is_element_present_by_css(locators.SYNC_TOGGLE, self.wait_time):
+            self.driver.find_by_css(locators.SYNC_TOGGLE).click()
 
     def set_description(self):
         if self.driver.is_element_present_by_name(locators.DESCRIPTION_INPUT):
@@ -78,21 +92,44 @@ class EditPage(Page):
         if self.driver.is_element_present_by_name(locators.COMMENTS_INPUT):
             self.driver.find_by_name(locators.COMMENTS_INPUT).fill(self.note)
 
+    def set_device_type(self):
+        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_INPUT, self.wait_time):
+            input = self.driver.find_by_css(locators.DEVICE_TYPE_INPUT).first
+            input.click()
+        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_LIST_ITEM, self.wait_time):
+            time.sleep(0.5)
+            self.driver.find_by_css(locators.DEVICE_TYPE_LIST_ITEM)[1].click()
+
+    def set_device_type_show(self):
+        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_SHOW_INPUT, self.wait_time):
+            input = self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT).first
+            input.click()
+        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_SHOW_LIST_ITEM, self.wait_time):
+            time.sleep(0.5)
+            self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_LIST_ITEM)[2].click()
+
+    def set_multilinks(self):
+        if self.driver.is_element_present_by_css(locators.MULTILINKS_TOGGLE, self.wait_time):
+            self.driver.find_by_css(locators.MULTILINKS_TOGGLE).click()
+
     def save_project_changes(self):
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.driver.find_by_text('Сохранить')[0].click()
 
     def reload(self):
         self.driver.reload()
 
     def should_be_changed_manager_name(self):
-        assert not self.driver.find_by_css(locators.MANAGER_INPUT + ' input[value="Админ"]', 5)
+        assert not self.driver.find_by_css(locators.MANAGER_INPUT +
+                                           ' input[value="' + self.manager_default_text + '"]', 5)
         #брать имя менеджера из базы
-        assert self.driver.find_by_css(locators.MANAGER_INPUT + ' input[value="Бот"]', 5), \
+        assert self.driver.find_by_css(locators.MANAGER_INPUT + ' input[value="' + self.manager_text + '"]', 5), \
             'manager name should be Бот, but not'
 
     def should_be_changed_project_manager_name(self):
-        assert self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT + ' input[value="Бот"]', 5), \
+        assert not self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT +
+                                           ' input[value="' + self.project_manager_default_text + '"]', 5)
+        assert self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT +
+                                       ' input[value="' + self.project_manager_text + '"]', 5), \
             'project manager name should be Бот, but not'
 
     def should_be_changed_url_template(self, changed_url):
@@ -113,7 +150,7 @@ class EditPage(Page):
         assert selected_type == self.xpctd_type, 'type expected to be ' + self.xpctd_type + ', but not'
 
     def should_be_changed_sync(self):
-        assert self.driver.is_element_present_by_css('.form-group:nth-child(7) .react-toggle--checked', self.wait_time)
+        assert self.driver.is_element_present_by_css(locators.SYNC_TOGGLE + '--checked', self.wait_time)
 
     def should_be_changed_description(self):
         description_text = self.driver.find_by_name(locators.DESCRIPTION_INPUT).text
@@ -123,6 +160,23 @@ class EditPage(Page):
     def should_be_changed_comments(self):
         comment_text = self.driver.find_by_name(locators.COMMENTS_INPUT).text
         assert comment_text == self.note, 'project description expected to be equal to ' + self.note + ', but not'
+
+    def should_be_changed_device_type(self):
+        assert not self.driver.find_by_css(locators.DEVICE_TYPE_INPUT +
+                                           ' input[value="' + self.device_type_default_text + '"]', 5)
+        assert self.driver.find_by_css(locators.DEVICE_TYPE_INPUT +
+                                       ' input[value="' + self.device_type_text + '"]', 5), \
+            'project manager name should be ' + self.device_type_text + ', but not'
+
+    def should_be_changed_device_type_show(self):
+        assert not self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT +
+                                           ' input[value="' + self.device_type_show_default_text + '"]', 5)
+        assert self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT +
+                                       ' input[value="' + self.device_type_show_text + '"]', 5), \
+            'project manager name should be ' + self.device_type_show_text + ', but not'
+
+    def should_be_changed_multilink(self):
+        assert self.driver.is_element_present_by_css(locators.MULTILINKS_TOGGLE + '--checked', self.wait_time)
 
     @staticmethod
     def set_default_settings(headers, config):
