@@ -34,6 +34,7 @@ class EditPage(Page):
         self.set_device_type()
         self.set_device_type_show()
         self.set_multilinks()
+        self.set_category()
 
     def should_be_changed_settings(self, changed_url):
         self.should_be_changed_manager_name()
@@ -49,68 +50,65 @@ class EditPage(Page):
         self.should_be_changed_device_type_show()
         self.should_be_changed_multilink()
 
-    def set_manager(self):
-        if self.driver.is_element_present_by_css(locators.MANAGER_INPUT, self.wait_time):
-            self.driver.find_by_css(locators.MANAGER_INPUT).first.click()
-        if self.driver.is_element_present_by_css(locators.MANAGER_LIST_ITEM, self.wait_time):
+    def set_dropdown(self, input_locator, list_item_locator, li_number):
+        if self.driver.is_element_present_by_css(input_locator, self.wait_time):
+            self.driver.find_by_css(input_locator).first.click()
+        if self.driver.is_element_present_by_css(list_item_locator, self.wait_time):
             time.sleep(0.5)
-            self.driver.find_by_css(locators.MANAGER_LIST_ITEM)[4].click()
+            self.driver.find_by_css(list_item_locator)[li_number].click()
 
-    def set_project_manager(self):
-        if self.driver.is_element_present_by_css(locators.PROJECT_MANAGER_INPUT, self.wait_time):
-            self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT).first.click()
-        if self.driver.is_element_present_by_css(locators.PROJECT_MANAGER_LIST_ITEM, self.wait_time):
-            time.sleep(0.5)
-            self.driver.find_by_css(locators.PROJECT_MANAGER_LIST_ITEM)[4].click()
+    def set_input(self, input_locator, value):
+        if self.driver.is_element_present_by_name(input_locator, self.wait_time):
+            self.driver.find_by_name(input_locator)[0].fill(value)
 
-    def set_template_url(self, changed_url):
-        if self.driver.is_element_present_by_name(locators.URL_TEMPLATE_INPUT, self.wait_time):
-            self.driver.find_by_name(locators.URL_TEMPLATE_INPUT)[0].fill(changed_url)
-
-    def set_inner_name(self):
-        if self.driver.is_element_present_by_name(locators.INNER_NAME_INPUT, self.wait_time):
-            self.driver.find_by_name(locators.INNER_NAME_INPUT)[0].fill(self.inner_name)
-
-    def set_name(self):
-        if self.driver.is_element_present_by_name(locators.NAME_INPUT, self.wait_time):
-            self.driver.find_by_name(locators.NAME_INPUT)[0].fill(self.name)
+    def set_toggle(self, toggle_locator):
+        if self.driver.is_element_present_by_css(toggle_locator, self.wait_time):
+            self.driver.find_by_css(toggle_locator).click()
 
     def set_type(self):
         if self.driver.is_element_present_by_css(locators.TYPE_INPUT, self.wait_time):
             self.driver.find_by_css(locators.TYPE_INPUT)[0].click()
         self.driver.find_by_css(locators.TYPE_LIST_ITEM)[2].click()
 
+    def set_category(self):
+        if self.driver.is_element_present_by_css('.rw-multiselect button.rw-multiselect-tag-btn'):
+            self.driver.find_by_css('.rw-multiselect button.rw-multiselect-tag-btn').click()
+        if self.driver.is_element_present_by_css('.rw-multiselect li'):
+            time.sleep(0.5)
+            self.driver.find_by_css('.rw-multiselect li')[3].click()
+
+    def set_manager(self):
+        self.set_dropdown(locators.MANAGER_INPUT, locators.MANAGER_LIST_ITEM, 4)
+
+    def set_project_manager(self):
+        self.set_dropdown(locators.PROJECT_MANAGER_INPUT, locators.PROJECT_MANAGER_LIST_ITEM, 4)
+
+    def set_template_url(self, changed_url):
+        self.set_input(locators.URL_TEMPLATE_INPUT, changed_url)
+
+    def set_inner_name(self):
+        self.set_input(locators.INNER_NAME_INPUT, self.inner_name)
+
+    def set_name(self):
+        self.set_input(locators.NAME_INPUT, self.name)
+
     def set_sync(self):
-        if self.driver.is_element_present_by_css(locators.SYNC_TOGGLE, self.wait_time):
-            self.driver.find_by_css(locators.SYNC_TOGGLE).click()
+        self.set_toggle(locators.SYNC_TOGGLE)
 
     def set_description(self):
-        if self.driver.is_element_present_by_name(locators.DESCRIPTION_INPUT):
-            self.driver.find_by_name(locators.DESCRIPTION_INPUT).fill(self.description)
+        self.set_input(locators.DESCRIPTION_INPUT, self.description)
 
     def set_comments(self):
-        if self.driver.is_element_present_by_name(locators.COMMENTS_INPUT):
-            self.driver.find_by_name(locators.COMMENTS_INPUT).fill(self.note)
+        self.set_input(locators.COMMENTS_INPUT, self.note)
 
     def set_device_type(self):
-        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_INPUT, self.wait_time):
-            input = self.driver.find_by_css(locators.DEVICE_TYPE_INPUT).first
-            input.click()
-        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_LIST_ITEM, self.wait_time):
-            time.sleep(0.5)
-            self.driver.find_by_css(locators.DEVICE_TYPE_LIST_ITEM)[1].click()
+        self.set_dropdown(locators.DEVICE_TYPE_INPUT, locators.DEVICE_TYPE_LIST_ITEM, 1)
 
     def set_device_type_show(self):
-        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_SHOW_INPUT, self.wait_time):
-            input = self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT).first
-            input.click()
-        if self.driver.is_element_present_by_css(locators.DEVICE_TYPE_SHOW_LIST_ITEM, self.wait_time):
-            time.sleep(0.5)
-            self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_LIST_ITEM)[2].click()
+        self.set_dropdown(locators.DEVICE_TYPE_SHOW_INPUT, locators.DEVICE_TYPE_SHOW_LIST_ITEM, 2)
 
     def set_multilinks(self):
-        if self.driver.is_element_present_by_css(locators.MULTILINKS_TOGGLE, self.wait_time):
-            self.driver.find_by_css(locators.MULTILINKS_TOGGLE).click()
+        self.set_toggle(locators.MULTILINKS_TOGGLE)
 
     def save_project_changes(self):
         self.driver.find_by_text('Сохранить')[0].click()
@@ -118,65 +116,55 @@ class EditPage(Page):
     def reload(self):
         self.driver.reload()
 
-    def should_be_changed_manager_name(self):
-        assert not self.driver.find_by_css(locators.MANAGER_INPUT +
-                                           ' input[value="' + self.manager_default_text + '"]', 5)
-        #брать имя менеджера из базы
-        assert self.driver.find_by_css(locators.MANAGER_INPUT + ' input[value="' + self.manager_text + '"]', 5), \
-            'manager name should be Бот, but not'
+    def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text):
+        assert not self.driver.find_by_css(dropdown_locator + ' input[value="' + default_text + '"]', 5)
+        # брать ожидаемый текст из базы из базы
+        assert self.driver.find_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]', 5)
 
-    def should_be_changed_project_manager_name(self):
-        assert not self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT +
-                                           ' input[value="' + self.project_manager_default_text + '"]', 5)
-        assert self.driver.find_by_css(locators.PROJECT_MANAGER_INPUT +
-                                       ' input[value="' + self.project_manager_text + '"]', 5), \
-            'project manager name should be Бот, but not'
+    def is_changed_input(self, input_locator, xpctd_text):
+        assert self.driver.find_by_name(input_locator).text == xpctd_text
 
-    def should_be_changed_url_template(self, changed_url):
-        url_template = self.driver.find_by_name(locators.URL_TEMPLATE_INPUT).text
-        assert url_template == changed_url, 'url template expected to be equal to ' + changed_url + ', but not'
-
-    def should_be_changed_inner_name(self):
-        inner_name_value = self.driver.find_by_name(locators.INNER_NAME_INPUT)[0].value
-        assert inner_name_value == self.inner_name, 'project InnerName expected to be equal to ' \
-                                                    + self.inner_name + 'but not'
-
-    def should_be_changed_name(self):
-        name_value = self.driver.find_by_name(locators.NAME_INPUT)[0].value
-        assert name_value == self.name, 'project Name expected to be equal to ' + self.name + ', but not'
+    def is_changed_toggle(self, toggle_locator):
+        assert self.driver.is_element_present_by_css(toggle_locator + '--checked', self.wait_time)
 
     def should_be_changed_type(self):
         selected_type = self.driver.find_by_css(locators.TYPE_INPUT).text
-        assert selected_type == self.xpctd_type, 'type expected to be ' + self.xpctd_type + ', but not'
+        assert selected_type == self.xpctd_type
+
+    def should_be_changed_manager_name(self):
+        self.is_changed_dropdown(locators.MANAGER_INPUT, self.manager_default_text, self.manager_text)
+
+    def should_be_changed_project_manager_name(self):
+        self.is_changed_dropdown(locators.PROJECT_MANAGER_INPUT,
+                                 self.project_manager_default_text, self.project_manager_text)
+
+    def should_be_changed_url_template(self, changed_url):
+        self.is_changed_input(locators.URL_TEMPLATE_INPUT, changed_url)
+
+    def should_be_changed_inner_name(self):
+        self.is_changed_input(locators.INNER_NAME_INPUT, self.inner_name)
+
+    def should_be_changed_name(self):
+        self.is_changed_input(locators.NAME_INPUT, self.name)
 
     def should_be_changed_sync(self):
-        assert self.driver.is_element_present_by_css(locators.SYNC_TOGGLE + '--checked', self.wait_time)
+        self.is_changed_toggle(locators.SYNC_TOGGLE)
 
     def should_be_changed_description(self):
-        description_text = self.driver.find_by_name(locators.DESCRIPTION_INPUT).text
-        assert description_text == self.description, 'project description expected to be equal to ' + self.description \
-                                                     + ', but not'
+        self.is_changed_input(locators.DESCRIPTION_INPUT, self.description)
 
     def should_be_changed_comments(self):
-        comment_text = self.driver.find_by_name(locators.COMMENTS_INPUT).text
-        assert comment_text == self.note, 'project description expected to be equal to ' + self.note + ', but not'
+        self.is_changed_input(locators.COMMENTS_INPUT, self.note)
 
     def should_be_changed_device_type(self):
-        assert not self.driver.find_by_css(locators.DEVICE_TYPE_INPUT +
-                                           ' input[value="' + self.device_type_default_text + '"]', 5)
-        assert self.driver.find_by_css(locators.DEVICE_TYPE_INPUT +
-                                       ' input[value="' + self.device_type_text + '"]', 5), \
-            'project manager name should be ' + self.device_type_text + ', but not'
+        self.is_changed_dropdown(locators.DEVICE_TYPE_INPUT, self.device_type_default_text, self.device_type_text)
 
     def should_be_changed_device_type_show(self):
-        assert not self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT +
-                                           ' input[value="' + self.device_type_show_default_text + '"]', 5)
-        assert self.driver.find_by_css(locators.DEVICE_TYPE_SHOW_INPUT +
-                                       ' input[value="' + self.device_type_show_text + '"]', 5), \
-            'project manager name should be ' + self.device_type_show_text + ', but not'
+        self.is_changed_dropdown(locators.DEVICE_TYPE_SHOW_INPUT,
+                                 self.device_type_show_default_text, self.device_type_show_text)
 
     def should_be_changed_multilink(self):
-        assert self.driver.is_element_present_by_css(locators.MULTILINKS_TOGGLE + '--checked', self.wait_time)
+        self.is_changed_toggle(locators.MULTILINKS_TOGGLE)
 
     @staticmethod
     def set_default_settings(headers, config):
