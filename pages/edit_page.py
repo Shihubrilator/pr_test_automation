@@ -20,6 +20,7 @@ class EditPage(Page):
     manager_default_text = 'Админ'
     project_manager_text = 'Бот'
     project_manager_default_text = 'Админ'
+    xpctd_category = 'Безалкогольные напитки'
 
     def set_settings(self, changed_url):
         self.set_manager()
@@ -49,6 +50,7 @@ class EditPage(Page):
         self.should_be_changed_device_type()
         self.should_be_changed_device_type_show()
         self.should_be_changed_multilink()
+        self.should_be_changed_category()
 
     def set_dropdown(self, input_locator, list_item_locator, li_number):
         if self.driver.is_element_present_by_css(input_locator, self.wait_time):
@@ -118,7 +120,7 @@ class EditPage(Page):
 
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text):
         assert not self.driver.find_by_css(dropdown_locator + ' input[value="' + default_text + '"]', 5)
-        # брать ожидаемый текст из базы из базы
+        # брать ожидаемый текст из базы
         assert self.driver.find_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]', 5)
 
     def is_changed_input(self, input_locator, xpctd_text):
@@ -126,6 +128,10 @@ class EditPage(Page):
 
     def is_changed_toggle(self, toggle_locator):
         assert self.driver.is_element_present_by_css(toggle_locator + '--checked', self.wait_time)
+
+    def should_be_changed_category(self):
+        category = self.driver.find_by_css('.rw-multiselect li.rw-multiselect-tag').text
+        assert category == self.xpctd_category
 
     def should_be_changed_type(self):
         selected_type = self.driver.find_by_css(locators.TYPE_INPUT).text
