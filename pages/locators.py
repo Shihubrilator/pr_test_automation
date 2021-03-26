@@ -26,4 +26,7 @@ class EditPageLocators:
     MULTILINKS_TOGGLE = '.form-group:nth-child(14) .react-toggle'
     DESCRIPTION_INPUT = 'SurveyDescription'
     COMMENTS_INPUT = 'Notes'
+    CATEGORY_LIST = '.rw-multiselect button.rw-multiselect-tag-btn'
+    CATEGORY_LIST_ITEM = '.rw-multiselect li'
+    CATEGORY_LIST_ITEM_SELECTED = '.rw-multiselect li.rw-multiselect-tag'
 

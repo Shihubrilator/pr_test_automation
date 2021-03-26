@@ -5,6 +5,7 @@ import requests
 import json
 from pages.login_page import LoginPage
 from pages.edit_page import EditPage
+import time
 
 
 def pytest_addoption(parser):
@@ -15,18 +16,17 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="module")
 def browser(request):
     browser_name = request.config.getoption("browser_name")
-    browser = None
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         browser = Browser("chrome")
-        browser.driver.set_window_size(1900, 1000)
+        browser.driver.maximize_window()#set_window_size(1900, 1000)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         browser = Browser("firefox")
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
     yield browser
-    print("\nquit browser..")
+    print("\n\nquit browser..")
     browser.quit()
 
 
@@ -65,8 +65,9 @@ def pr_edit_page(browser, config, pr_headers):
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
-    page.set_settings(config['pr']['template_url'])
+    page.set_settings(config)
     page.save_project_changes()
     page.reload()
+    time.sleep(1)
     yield page
     page.set_default_settings(pr_headers, config)
