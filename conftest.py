@@ -3,6 +3,8 @@ from splinter import Browser
 import yaml
 import requests
 import json
+from pages.login_page import LoginPage
+from pages.edit_page import EditPage
 
 
 def pytest_addoption(parser):
@@ -10,7 +12,7 @@ def pytest_addoption(parser):
                      help="Choose browser: chrome or firefox")
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     browser = None
@@ -49,9 +51,22 @@ def login(config):
     return r.cookies.get_dict()['authtoken']
 
 
-@pytest.fixture()
+@pytest.fixture(scope='module')
 def pr_headers(login, config):
     """лепим хидер запроса"""
     return {'Accept': 'application/json',
             'Cookie': 'authtoken=' + login,
             'Content-Type': 'application/json'}
+
+@pytest.fixture(scope='module')
+def pr_edit_page(browser, config, pr_headers):
+    url = config['pr']['project_url']
+    login_page = LoginPage(driver=browser, base_url=url)
+    login_page.open()
+    login_page.login(config['pr']['login'], config['pr']['passwd'])
+    page = EditPage(driver=browser, base_url=url)
+    page.set_settings(config['pr']['template_url'])
+    page.save_project_changes()
+    page.reload()
+    yield page
+    page.set_default_settings(pr_headers, config)

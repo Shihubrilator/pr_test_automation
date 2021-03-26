@@ -124,14 +124,17 @@ class EditPage(Page):
         assert self.driver.find_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]', 5)
 
     def is_changed_input(self, input_locator, xpctd_text):
-        assert self.driver.find_by_name(input_locator).text == xpctd_text
+        text = self.driver.find_by_name(input_locator).value
+        #print(text)
+        assert text == xpctd_text, '"' + text + '" expected to be equal to "' + xpctd_text + '"'
 
     def is_changed_toggle(self, toggle_locator):
         assert self.driver.is_element_present_by_css(toggle_locator + '--checked', self.wait_time)
 
     def should_be_changed_category(self):
         category = self.driver.find_by_css('.rw-multiselect li.rw-multiselect-tag').text
-        assert category == self.xpctd_category
+        #print("category_text = " + category)
+        assert category == self.xpctd_category + ' ×'
 
     def should_be_changed_type(self):
         selected_type = self.driver.find_by_css(locators.TYPE_INPUT).text

@@ -1,18 +1,50 @@
-from pages.login_page import LoginPage
-from pages.edit_page import EditPage
-import time
+def test_changed_manager_name(pr_edit_page):
+    pr_edit_page.should_be_changed_manager_name()
 
 
-def test_change_project_settings(browser, config, pr_headers):
-    url = config['pr']['project_url']
-    login_page = LoginPage(driver=browser, base_url=url)
-    login_page.open()
-    login_page.login(config['pr']['login'], config['pr']['passwd'])
-    page = EditPage(driver=browser, base_url=url)
-    page.set_settings(config['pr']['template_url'])
-    page.save_project_changes()
-    page.reload()
-    page.should_be_changed_settings(config['pr']['template_url'])
-    # делать в тирдауне фикстуры?? какой??
-    page.set_default_settings(pr_headers, config)
-    time.sleep(5)
+def test_changed_project_manager_name(pr_edit_page):
+    pr_edit_page.should_be_changed_project_manager_name()
+
+
+def test_changed_url_template(pr_edit_page, config):
+    pr_edit_page.should_be_changed_url_template(config['pr']['template_url'])
+
+
+def test_changed_inner_name(pr_edit_page):
+    pr_edit_page.should_be_changed_inner_name()
+
+
+def test_changed_name(pr_edit_page):
+    pr_edit_page.should_be_changed_name()
+
+
+def test_changed_type(pr_edit_page):
+    pr_edit_page.should_be_changed_type()
+
+
+def test_changed_sync(pr_edit_page):
+    pr_edit_page.should_be_changed_sync()
+
+
+def test_changed_description(pr_edit_page):
+    pr_edit_page.should_be_changed_description()
+
+
+def test_changed_comments(pr_edit_page):
+    pr_edit_page.should_be_changed_comments()
+
+
+def test_changed_device_type(pr_edit_page):
+    pr_edit_page.should_be_changed_device_type()
+
+
+def test_changed_device_type_show(pr_edit_page):
+    pr_edit_page.should_be_changed_device_type_show()
+
+
+def test_changed_multilink(pr_edit_page):
+    pr_edit_page.should_be_changed_multilink()
+
+
+def test_changed_category(pr_edit_page):
+    pr_edit_page.should_be_changed_category()
