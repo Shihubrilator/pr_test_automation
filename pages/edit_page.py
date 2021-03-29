@@ -84,19 +84,21 @@ class EditPage(Page):
 
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text, config):
         assert not self.driver.find_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
-                                           config['pr']['wait_time'])
+                                           config['pr']['wait_time']), 'Dropdown is not changed'
         assert self.driver.find_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]',
-                                       config['pr']['wait_time'])
+                                       config['pr']['wait_time']), 'Dropdown is not found'
 
     def is_changed_input(self, xpctd_text):
-        assert self.driver.is_element_present_by_value(xpctd_text)
+        assert self.driver.is_element_present_by_value(xpctd_text), 'Input with text "' + xpctd_text + '" is not found'
 
     def is_changed_toggle(self, toggle_locator, config):
-        assert self.driver.is_element_present_by_css(toggle_locator + '--checked', config['pr']['wait_time'])
+        assert self.driver.is_element_present_by_css(toggle_locator + '--checked', config['pr']['wait_time']), \
+            'Element "' + toggle_locator + '--checked" is not found'
 
     def should_be_changed_category(self, config):
         category = self.driver.find_by_css(locators.CATEGORY_LIST_ITEM_SELECTED).text
-        assert category == config['pr']['xpctd_settings']['category'] + ' ×'
+        xpctd_category = config['pr']['xpctd_settings']['category'] + ' ×'
+        assert category == xpctd_category, 'Category "' + category + '" expected to be "' + xpctd_category + '"'
 
     def should_be_changed_type(self, config):
         assert self.driver.is_element_present_by_text(config['pr']['xpctd_settings']['type'],
@@ -114,7 +116,6 @@ class EditPage(Page):
 
     def should_be_changed_url_template(self, config):
         self.is_changed_input(config['pr']['xpctd_settings']['url_template'])
-
 
     def should_be_changed_inner_name(self, config):
         self.is_changed_input(config['pr']['xpctd_settings']['inner_name'])
