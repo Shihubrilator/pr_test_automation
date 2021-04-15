@@ -67,7 +67,7 @@ def pr_edit_page(browser, config, pr_headers):
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
-    page.set_settings(config)
+    page.change_settings(config)
     page.save_project_changes()
     page.reload()
     time.sleep(1)
