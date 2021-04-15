@@ -83,10 +83,10 @@ class EditPage(Page):
         self.set_toggle(locators.MULTILINKS_TOGGLE, config)
 
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text, config):
-        assert not self.driver.find_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
-                                           config['pr']['wait_time']), 'Dropdown is not changed'
-        assert self.driver.find_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]',
-                                       config['pr']['wait_time']), 'Dropdown is not found'
+        assert not self.driver.is_element_present_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
+                                                         config['pr']['wait_time']), 'Dropdown is not changed'
+        assert self.driver.is_element_present_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]',
+                                                     config['pr']['wait_time']), 'Dropdown is not found'
 
     def is_changed_input(self, xpctd_text):
         assert self.driver.is_element_present_by_value(xpctd_text), 'Input with text "' + xpctd_text + '" is not found'
@@ -156,4 +156,3 @@ class EditPage(Page):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
         requests.put(url=request_url, headers=headers, data=payload)
-        # проверить, что запрос отправился

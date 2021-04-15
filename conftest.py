@@ -6,6 +6,8 @@ import json
 from pages.login_page import LoginPage
 from pages.edit_page import EditPage
 import time
+from datetime import datetime
+import pathlib
 
 
 def pytest_addoption(parser):
@@ -18,8 +20,8 @@ def browser(request):
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
-        browser = Browser("chrome")
-        browser.driver.maximize_window()#set_window_size(1900, 1000)
+        browser = Browser("chrome", headless=True)
+        browser.driver.maximize_window()
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         browser = Browser("firefox")
@@ -71,3 +73,36 @@ def pr_edit_page(browser, config, pr_headers):
     time.sleep(1)
     yield page
     page.set_default_settings(pr_headers, config)
+
+# set up a hook to be able to check if a test has failed
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    # execute all other hooks to obtain the report object
+    outcome = yield
+    rep = outcome.get_result()
+
+    # set a report attribute for each phase of a call, which can
+    # be "setup", "call", "teardown"
+
+    setattr(item, "rep_" + rep.when, rep)
+
+# check if a test has failed
+@pytest.fixture(scope="function", autouse=True)
+def test_failed_check(request):
+    yield
+    # request.node is an "item" because we use the default
+    # "function" scope
+    if request.node.rep_setup.failed:
+        print("setting up a test failed!", request.node.nodeid)
+    elif request.node.rep_setup.passed:
+        if request.node.rep_call.failed:
+            driver = request.node.funcargs['browser']
+            take_screenshot(driver, request.node.nodeid)
+            print("executing test failed", request.node.nodeid)
+
+# make a screenshot with a name of the test, date and time
+def take_screenshot(driver, nodeid):
+    time.sleep(1)
+    file_name = f'{nodeid}_{datetime.today().strftime("%Y-%m-%d_%H:%M")}'\
+        .replace("/", "_").replace(":", "_").replace(".", "_")
+    driver.screenshot(str(pathlib.Path().absolute()) + '/Screenshots/' + file_name)
