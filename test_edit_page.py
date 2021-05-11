@@ -48,3 +48,7 @@ def test_changed_multilink(pr_edit_page, config):
 
 def test_changed_category(pr_edit_page, config):
     pr_edit_page.should_be_changed_category(config)
+
+
+def test_cancel_status_changes(pr_edit_page, config):
+    pr_edit_page.should_be_not_changed_status_time(config)

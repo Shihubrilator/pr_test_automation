@@ -9,14 +9,14 @@ class ProjectsPageLocators:
 
 
 class EditPageLocators:
-    MANAGER_INPUT = "#rw_2_input .rw-widget-input"
-    MANAGER_LIST_ITEM = "#rw_2_input li.rw-list-option"
-    PROJECT_MANAGER_INPUT = "#rw_3_input .rw-widget-input"
-    PROJECT_MANAGER_LIST_ITEM = "#rw_3_input li.rw-list-option"
-    DEVICE_TYPE_INPUT = "#rw_4_input .rw-widget-input"
-    DEVICE_TYPE_LIST_ITEM = "#rw_4_listbox li.rw-list-option"
-    DEVICE_TYPE_SHOW_INPUT = "#rw_5_input .rw-widget-input"
-    DEVICE_TYPE_SHOW_LIST_ITEM = "#rw_5_listbox li.rw-list-option"
+    MANAGER_INPUT = "#rw_3_input .rw-widget-input"
+    MANAGER_LIST_ITEM = "#rw_3_input li.rw-list-option"
+    PROJECT_MANAGER_INPUT = "#rw_4_input .rw-widget-input"
+    PROJECT_MANAGER_LIST_ITEM = "#rw_4_input li.rw-list-option"
+    DEVICE_TYPE_INPUT = "#rw_5_input .rw-widget-input"
+    DEVICE_TYPE_LIST_ITEM = "#rw_5_listbox li.rw-list-option"
+    DEVICE_TYPE_SHOW_INPUT = "#rw_6_input .rw-widget-input"
+    DEVICE_TYPE_SHOW_LIST_ITEM = "#rw_6_listbox li.rw-list-option"
     URL_TEMPLATE_INPUT = 'SurveyEngineTemplateUrl'
     INNER_NAME_INPUT = 'InnerName'
     NAME_INPUT = 'Name'
@@ -29,4 +29,8 @@ class EditPageLocators:
     CATEGORY_LIST = '.rw-multiselect button.rw-multiselect-tag-btn'
     CATEGORY_LIST_ITEM = '.rw-multiselect li'
     CATEGORY_LIST_ITEM_SELECTED = '.rw-multiselect li.rw-multiselect-tag'
+    COMPLETE_AVERAGE_TIME_CELL = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5)'
+    COMPLETE_AVERAGE_TIME_INPUT_SHOW = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5) span span'
+    COMPLETE_AVERAGE_TIME_INPUT = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5) input[name=AverageTime]'
+    STATUS_CANCEL_CHANGES = '.js-kendo-button-cancel'
 

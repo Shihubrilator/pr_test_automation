@@ -3,6 +3,7 @@ from .locators import EditPageLocators as locators
 import time
 import requests
 import json
+from selenium.webdriver.common.keys import Keys
 
 
 class EditPage(Page):
@@ -82,6 +83,15 @@ class EditPage(Page):
     def change_multilinks(self, config):
         self.set_toggle(locators.MULTILINKS_TOGGLE, config)
 
+    def change_status_time(self, config):
+        self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, config['pr']['wait_time']).click()
+        self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT_SHOW, config['pr']['wait_time']).click()
+        self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type(Keys.BACKSPACE)
+        self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type(Keys.BACKSPACE)
+        self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type('42')
+        self.driver.find_by_css('h3')[1].click()
+        self.driver.find_by_css(locators.STATUS_CANCEL_CHANGES, config['pr']['wait_time']).click()
+
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text, config):
         assert not self.driver.is_element_present_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
                                                          config['pr']['wait_time']), 'Dropdown is not changed'
@@ -103,6 +113,11 @@ class EditPage(Page):
     def should_be_changed_type(self, config):
         assert self.driver.is_element_present_by_text(config['pr']['xpctd_settings']['type'],
                                                       config['pr']['wait_time']), 'Type is not changed'
+
+    def should_be_not_changed_status_time(self, config):
+        text = self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, config['pr']['wait_time']).text
+        xpctd_text = '10'
+        assert text == xpctd_text, 'Status time was changed'
 
     def should_be_changed_manager_name(self, config):
         self.is_changed_dropdown(locators.MANAGER_INPUT,

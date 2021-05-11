@@ -20,7 +20,7 @@ def browser(request):
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
-        browser = Browser("chrome", headless=True)
+        browser = Browser("chrome")#, headless=True)
         browser.driver.maximize_window()
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
@@ -70,7 +70,7 @@ def pr_edit_page(browser, config, pr_headers):
     page.change_settings(config)
     page.save_project_changes()
     page.reload()
-    time.sleep(1)
+    page.change_status_time(config)
     yield page
     page.set_default_settings(pr_headers, config)
 
