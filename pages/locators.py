@@ -32,5 +32,8 @@ class EditPageLocators:
     COMPLETE_AVERAGE_TIME_CELL = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5)'
     COMPLETE_AVERAGE_TIME_INPUT_SHOW = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5) span span'
     COMPLETE_AVERAGE_TIME_INPUT = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(5) td:nth-of-type(5) input[name=AverageTime]'
+    SCREENOUT_AVERAGE_TIME_CELL = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(4) td:nth-of-type(5)'
+    SCREENOUT_AVERAGE_TIME_INPUT_SHOW = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(4) td:nth-of-type(5) span span'
+    SCREENOUT_AVERAGE_TIME_INPUT = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(4) td:nth-of-type(5) input[name=AverageTime]'
     STATUS_CANCEL_CHANGES = '.js-kendo-button-cancel'
 

@@ -70,6 +70,7 @@ def pr_edit_page(browser, config, pr_headers):
     page.change_settings(config)
     page.save_project_changes()
     page.reload()
+    page.change_status_time_and_cancel(config)
     page.change_status_time(config)
     yield page
     page.set_default_settings(pr_headers, config)

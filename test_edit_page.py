@@ -52,3 +52,7 @@ def test_changed_category(pr_edit_page, config):
 
 def test_cancel_status_changes(pr_edit_page, config):
     pr_edit_page.should_be_not_changed_status_time(config)
+
+
+def test_status_changes(pr_edit_page, config):
+    pr_edit_page.should_be_changed_status_time(config)
