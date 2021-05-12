@@ -27,3 +27,5 @@ pr:
     manager: Бот
     project_manager: Бот
     category: Безалкогольные напитки
+  xpctd_c_tmplt_settings:
+    new_c_tmplt_name: Nice collector template name

@@ -7,21 +7,6 @@ from selenium.webdriver.common.keys import Keys
 
 
 class EditPage(Page):
-    def change_settings(self, config):
-        self.change_manager(config)
-        self.change_project_manager(config)
-        self.change_template_url(config)
-        self.change_inner_name(config)
-        self.change_name(config)
-        self.change_type(config)
-        self.change_sync(config)
-        self.change_description(config)
-        self.change_comments(config)
-        self.change_device_type(config)
-        self.change_device_type_show(config)
-        self.change_multilinks(config)
-        self.change_category(config)
-
     def set_dropdown(self, input_locator, list_item_locator, li_number, config):
         if self.driver.is_element_present_by_css(input_locator, config['pr']['wait_time']):
             self.driver.find_by_css(input_locator).first.click()
@@ -98,7 +83,7 @@ class EditPage(Page):
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type(Keys.BACKSPACE)
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type(Keys.BACKSPACE)
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_INPUT, config['pr']['wait_time']).type('20')
-        self.driver.find_by_css('h3')[1].click()
+        self.driver.find_by_css(locators.STATUS_SAVE_CHANGES, config['pr']['wait_time']).click()
 
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text, config):
         assert not self.driver.is_element_present_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
@@ -184,3 +169,26 @@ class EditPage(Page):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
         requests.put(url=request_url, headers=headers, data=payload)
+        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + \
+                      str(config['pr']['project_id']) + '/SurveyFinishStatus'
+        payload = {
+            'AverageTime': '',
+            'BackwardUri': 'http://qa.expertnoemnenie.ru/[hz]?status=92',
+            'Id': 765277187,
+            'Name': 'ScreenOut',
+            'StatusCode': 92,
+            'StatusType': 92,
+            'SurveyId': config['pr']['project_id']
+                   }
+        headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        headers['Content-Length'] = '168'
+        r = requests.put(url=request_url, headers=headers, data=payload)
+
+    def add_collector_template(self, config):
+        self.driver.find_by_css(locators.ADD_COLLECTOR_TEMPLATE_BUTTON, config['pr']['wait_time'])[0].click()
+        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT, config['pr']['wait_time']).\
+            type(config['xpctd_c_tmplt_settings']['new_c_tmplt_name'])
+        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON, config['pr']['wait_time']).click()
+
+    def should_be_collector_template_url(self):
+        assert '/collectortemplates/' in self.driver.url, 'Should be collector template url, but not'

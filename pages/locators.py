@@ -36,4 +36,7 @@ class EditPageLocators:
     SCREENOUT_AVERAGE_TIME_INPUT_SHOW = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(4) td:nth-of-type(5) span span'
     SCREENOUT_AVERAGE_TIME_INPUT = 'div.row.space div.col-md-6:nth-of-type(2) > div > div > h3~div tbody tr:nth-of-type(4) td:nth-of-type(5) input[name=AverageTime]'
     STATUS_CANCEL_CHANGES = '.js-kendo-button-cancel'
-
+    STATUS_SAVE_CHANGES = '.js-kendo-button-update'
+    ADD_COLLECTOR_TEMPLATE_BUTTON = 'h3 + div.btn'
+    COLLECTOR_TEMPLATE_NAME_INPUT = 'div.modal-body input'
+    COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON = 'div.modal-body button.btn-primary'

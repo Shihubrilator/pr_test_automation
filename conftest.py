@@ -57,8 +57,8 @@ def login(config):
 def pr_headers(login, config):
     """лепим хидер запроса"""
     return {'Accept': 'application/json',
-            'Cookie': 'authtoken=' + login,
-            'Content-Type': 'application/json'}
+            'Cookie': 'authtoken=' + login}
+
 
 @pytest.fixture(scope='module')
 def pr_edit_page(browser, config, pr_headers):
@@ -67,13 +67,9 @@ def pr_edit_page(browser, config, pr_headers):
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
-    page.change_settings(config)
-    page.save_project_changes()
-    page.reload()
-    page.change_status_time_and_cancel(config)
-    page.change_status_time(config)
     yield page
     page.set_default_settings(pr_headers, config)
+
 
 # set up a hook to be able to check if a test has failed
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -86,6 +82,7 @@ def pytest_runtest_makereport(item, call):
     # be "setup", "call", "teardown"
 
     setattr(item, "rep_" + rep.when, rep)
+
 
 # check if a test has failed
 @pytest.fixture(scope="function", autouse=True)
@@ -100,6 +97,7 @@ def test_failed_check(request):
             driver = request.node.funcargs['browser']
             take_screenshot(driver, request.node.nodeid)
             print("executing test failed", request.node.nodeid)
+
 
 # make a screenshot with a name of the test, date and time
 def take_screenshot(driver, nodeid):
