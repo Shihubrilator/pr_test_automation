@@ -191,7 +191,7 @@ class EditPage(Page):
         additional_headers = dict(headers)
         additional_headers['Content-Type'] = 'application/x-www-form-urlencoded'
         additional_headers['Content-Length'] = '168'
-        requests.put(url=request_url, headers=headers, data=payload)
+        requests.put(url=request_url, headers=additional_headers, data=payload)
 
     @staticmethod
     def delete_last_collector_template(config, headers, conn):
