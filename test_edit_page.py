@@ -101,3 +101,8 @@ def test_status_changes(pr_edit_page, config):
     pr_edit_page.save_project_changes()
     pr_edit_page.reload()
     pr_edit_page.should_be_changed_status_time(config)
+
+
+def test_create_collector_template(pr_edit_page, config):
+    pr_edit_page.add_collector_template(config)
+    pr_edit_page.should_be_collector_template_url()

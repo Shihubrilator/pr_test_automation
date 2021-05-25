@@ -164,11 +164,19 @@ class EditPage(Page):
     def reload(self):
         self.driver.reload()
 
+    def set_default_settings(self, headers, config, conn):
+        self.set_default_project_settings(config, headers)
+        self.set_default_status_settings(config, headers)
+        self.delete_last_collector_template(config, headers, conn)
+
     @staticmethod
-    def set_default_settings(headers, config):
+    def set_default_project_settings(config, headers):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
         requests.put(url=request_url, headers=headers, data=payload)
+
+    @staticmethod
+    def set_default_status_settings(config, headers):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + \
                       str(config['pr']['project_id']) + '/SurveyFinishStatus'
         payload = {
@@ -179,16 +187,30 @@ class EditPage(Page):
             'StatusCode': 92,
             'StatusType': 92,
             'SurveyId': config['pr']['project_id']
-                   }
-        headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        headers['Content-Length'] = '168'
-        r = requests.put(url=request_url, headers=headers, data=payload)
+        }
+        additional_headers = dict(headers)
+        additional_headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        additional_headers['Content-Length'] = '168'
+        requests.put(url=request_url, headers=headers, data=payload)
+
+    @staticmethod
+    def delete_last_collector_template(config, headers, conn):
+        cursor = conn.cursor()
+        cursor.execute('SELECT [Id]\
+                                FROM [qa_PanelRiderDB].[data].[SurveyCollectorTemplates]\
+                                WHERE SurveyId = ' + str(config['pr']['project_id']) + '\
+                                ORDER BY Id DESC')
+        ids = cursor.fetchall()
+        if len(ids) > 1:
+            request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectortemplates/' + str(ids[0][0])
+            requests.delete(url=request_url, headers=headers)
 
     def add_collector_template(self, config):
         self.driver.find_by_css(locators.ADD_COLLECTOR_TEMPLATE_BUTTON, config['pr']['wait_time'])[0].click()
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT, config['pr']['wait_time']).\
-            type(config['xpctd_c_tmplt_settings']['new_c_tmplt_name'])
+            type(config['pr']['xpctd_c_tmplt_settings']['new_c_tmplt_name'])
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON, config['pr']['wait_time']).click()
 
     def should_be_collector_template_url(self):
+        time.sleep(1)
         assert '/collectortemplates/' in self.driver.url, 'Should be collector template url, but not'

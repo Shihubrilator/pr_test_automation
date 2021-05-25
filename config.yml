@@ -1,3 +1,8 @@
+sqldb:
+  host: dubnium\testsql16
+  db: qa_PanelRiderDB
+  user: testdbuser
+  passwd: 111111
 pr:
   login: admin@expertnoemnenie.ru
   passwd: 111111

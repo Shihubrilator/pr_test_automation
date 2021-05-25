@@ -8,6 +8,7 @@ from pages.edit_page import EditPage
 import time
 from datetime import datetime
 import pathlib
+import pyodbc
 
 
 def pytest_addoption(parser):
@@ -37,6 +38,16 @@ def get_config():
         return yaml.load(ymlfile, Loader=yaml.FullLoader)
 
 
+def get_db_connect():
+    config = get_config()
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+                          'SERVER=' + config['sqldb']['host'] + ';'
+                          'DATABASE=' + config['sqldb']['db'] + ';'
+                          'UID=' + config['sqldb']['user'] + ';'
+                          'PWD=' + str(config['sqldb']['passwd']))
+    return conn
+
+
 @pytest.fixture(scope='session')
 def config():
     return get_config()
@@ -61,14 +72,21 @@ def pr_headers(login, config):
 
 
 @pytest.fixture(scope='module')
-def pr_edit_page(browser, config, pr_headers):
+def pr_edit_page(browser, config, pr_headers, conn):
     url = config['pr']['project_url']
     login_page = LoginPage(driver=browser, base_url=url)
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
     yield page
-    page.set_default_settings(pr_headers, config)
+    page.set_default_settings(pr_headers, config, conn)
+
+
+@pytest.fixture(scope='session')
+def conn():
+    c = get_db_connect()
+    yield c
+    c.close()
 
 
 # set up a hook to be able to check if a test has failed
