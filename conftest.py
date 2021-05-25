@@ -72,14 +72,14 @@ def pr_headers(login, config):
 
 
 @pytest.fixture(scope='module')
-def pr_edit_page(browser, config, pr_headers, conn):
+def pr_edit_page(browser, config, pr_headers):
     url = config['pr']['project_url']
     login_page = LoginPage(driver=browser, base_url=url)
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
     yield page
-    page.set_default_settings(pr_headers, config, conn)
+    page.set_default_settings(pr_headers, config)
 
 
 @pytest.fixture(scope='session')

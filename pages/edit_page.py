@@ -164,10 +164,10 @@ class EditPage(Page):
     def reload(self):
         self.driver.reload()
 
-    def set_default_settings(self, headers, config, conn):
+    def set_default_settings(self, headers, config):
         self.set_default_project_settings(config, headers)
         self.set_default_status_settings(config, headers)
-        self.delete_last_collector_template(config, headers, conn)
+        self.delete_last_collector_template(config, headers)
 
     @staticmethod
     def set_default_project_settings(config, headers):
@@ -194,15 +194,17 @@ class EditPage(Page):
         requests.put(url=request_url, headers=additional_headers, data=payload)
 
     @staticmethod
-    def delete_last_collector_template(config, headers, conn):
-        cursor = conn.cursor()
-        cursor.execute('SELECT [Id]\
-                                FROM [qa_PanelRiderDB].[data].[SurveyCollectorTemplates]\
-                                WHERE SurveyId = ' + str(config['pr']['project_id']) + '\
-                                ORDER BY Id DESC')
-        ids = cursor.fetchall()
-        if len(ids) > 1:
-            request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectortemplates/' + str(ids[0][0])
+    def delete_last_collector_template(config, headers):
+        param = {
+            'page': 1,
+            'pageSize': 20,
+            'filter': 'Deleted~eq~false~and~SurveyId~eq~' + str(config['pr']['project_id'])
+        }
+        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectorTemplates'
+        r = requests.get(url=request_url, headers=headers, params=param)
+        data = r.json()['Data']
+        if len(data) > 1:
+            request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectortemplates/' + str(data[0]['Id'])
             requests.delete(url=request_url, headers=headers)
 
     def add_collector_template(self, config):
