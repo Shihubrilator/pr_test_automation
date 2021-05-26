@@ -91,7 +91,7 @@ def pr_collector_template_page(browser, config, pr_headers):
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = CollectorTemplatePage(driver=browser, base_url=url)
     yield page
-    #page.set_default_c_template_settings(pr_headers, config)
+    page.set_default_c_template_settings(pr_headers, config)
 
 
 @pytest.fixture(scope='session')

@@ -2,11 +2,9 @@ import time
 
 
 def set_dropdown(driver, input_locator, list_item_locator, li_number, wait_time):
-    if driver.is_element_present_by_css(input_locator, wait_time):
-        driver.find_by_css(input_locator).first.click()
-    if driver.is_element_present_by_css(list_item_locator, wait_time):
-        time.sleep(0.5)
-        driver.find_by_css(list_item_locator)[li_number].click()
+    driver.find_by_css(input_locator, wait_time).first.click()
+    time.sleep(0.5)
+    driver.find_by_css(list_item_locator, wait_time)[li_number].click()
 
 
 def set_input(driver, input_locator, value, wait_time):

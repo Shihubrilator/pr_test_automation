@@ -44,3 +44,5 @@ class EditPageLocators:
 
 class CollectorTemplatePageLocators:
     TEMPLATE_NAME_INPUT = '.col-lg-8 input.form-control'
+    TEMPLATE_PANEL = 'div#rw_1_input div.rw-input'
+    TEMPLATE_PANEL_LIST_ITEM = 'div#rw_1_input li.rw-list-option'

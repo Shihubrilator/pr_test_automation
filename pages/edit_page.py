@@ -128,6 +128,10 @@ class EditPage(Page):
     def should_be_changed_multilink(self, config):
         is_changed_toggle(self.driver, locators.MULTILINKS_TOGGLE, config['pr']['wait_time'])
 
+    def should_be_collector_template_url(self):
+        time.sleep(1)
+        assert '/collectortemplates/' in self.driver.url, 'Should be collector template url, but not'
+
     def save_project_changes(self):
         self.driver.find_by_text('Сохранить')[0].click()
 
@@ -143,7 +147,8 @@ class EditPage(Page):
     def set_default_project_settings(config, headers):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
-        requests.put(url=request_url, headers=headers, data=payload)
+        r =requests.put(url=request_url, headers=headers, data=payload)
+        print(r)
 
     @staticmethod
     def set_default_status_settings(config, headers):
@@ -182,7 +187,3 @@ class EditPage(Page):
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT, config['pr']['wait_time']). \
             type(config['pr']['xpctd_c_tmplt_settings']['new_c_tmplt_name'])
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON, config['pr']['wait_time']).click()
-
-    def should_be_collector_template_url(self):
-        time.sleep(1)
-        assert '/collectortemplates/' in self.driver.url, 'Should be collector template url, but not'
