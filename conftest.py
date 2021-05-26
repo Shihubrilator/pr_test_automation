@@ -68,7 +68,7 @@ def login(config):
 @pytest.fixture(scope='module')
 def pr_headers(login, config):
     """лепим хидер запроса"""
-    return {'Accept': 'application/json',
+    return {'Content-Type': 'application/json',
             'Cookie': 'authtoken=' + login}
 
 

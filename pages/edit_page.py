@@ -148,7 +148,6 @@ class EditPage(Page):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
         r =requests.put(url=request_url, headers=headers, data=payload)
-        print(r)
 
     @staticmethod
     def set_default_status_settings(config, headers):

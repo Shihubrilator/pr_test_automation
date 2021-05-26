@@ -8,14 +8,14 @@ import json
 class CollectorTemplatePage(Page):
     def change_name(self, config):
         set_input(self.driver, locators.TEMPLATE_NAME_INPUT,
-                  config['pr']['xpctd_c_tmplt_settings']['c_tmplt_name'], config['pr']['wait_time'])
+                  config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
 
     def change_panel(self, config):
         set_dropdown(self.driver, locators.TEMPLATE_PANEL,
                      locators.TEMPLATE_PANEL_LIST_ITEM, 4, config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_c_tmplt_settings']['c_tmplt_name'])
+        is_changed_input(self.driver, config['pr']['xpctd_c_tmplt_settings']['name'])
 
     def should_be_changed_panel(self, config):
         is_changed_dropdown(self.driver, locators.TEMPLATE_PANEL,
@@ -34,5 +34,3 @@ class CollectorTemplatePage(Page):
                       'api/v2/admin/panel/0/collectortemplates/' + str(config['pr']['c_template_id'])
         data = json.dumps(config['pr']['default_c_template_settings_json'])
         r = requests.patch(url=request_url, headers=headers, data=data)
-        print(headers)
-        print(r)
