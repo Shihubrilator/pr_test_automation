@@ -10,9 +10,8 @@ def set_dropdown(driver, input_locator, list_item_locator, li_number, wait_time)
 
 
 def set_input(driver, input_locator, value, wait_time):
-    if driver.is_element_present_by_name(input_locator, wait_time):
-        driver.find_by_name(input_locator)[0].clear()
-        driver.find_by_name(input_locator)[0].fill(value)
+    driver.find_by_css(input_locator, wait_time)[0].clear()
+    driver.find_by_css(input_locator, wait_time)[0].fill(value)
 
 
 def set_toggle(driver, toggle_locator, wait_time):

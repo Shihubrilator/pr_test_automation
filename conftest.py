@@ -5,6 +5,7 @@ import requests
 import json
 from pages.login_page import LoginPage
 from pages.edit_page import EditPage
+from pages.collector_template_page import CollectorTemplatePage
 import time
 from datetime import datetime
 import pathlib
@@ -80,6 +81,17 @@ def pr_edit_page(browser, config, pr_headers):
     page = EditPage(driver=browser, base_url=url)
     yield page
     page.set_default_settings(pr_headers, config)
+
+
+@pytest.fixture(scope='module')
+def pr_collector_template_page(browser, config, pr_headers):
+    url = config['pr']['project_url'] + '/collectortemplates/' + str(config['pr']['c_template_id'])
+    login_page = LoginPage(driver=browser, base_url=url)
+    login_page.open()
+    login_page.login(config['pr']['login'], config['pr']['passwd'])
+    page = CollectorTemplatePage(driver=browser, base_url=url)
+    yield page
+    #page.set_default_c_template_settings(pr_headers, config)
 
 
 @pytest.fixture(scope='session')

@@ -9,6 +9,7 @@ pr:
   url: http://qa.panelrider.com/
   project_url: http://qa.panelrider.com/admin/projects/765277185
   project_id: 765277185
+  c_template_id: 768398738
   headers:
     accept: application/json
     content_type: application/json
@@ -19,6 +20,7 @@ pr:
     project_manager: Админ
     device_type_text: Все устройства
     device_type_show_text: Наследовать от типа устройств
+  default_c_template_settings: {"AllowDuplicates":false,"AutoFill":0,"Deleted":false,"ErrorMessage":null,"Id":768398738,"InvitationTemplate":0,"IsValid":true,"Name":"test_template","PanelId":1029695,"PanelName":"Экспертное мнение","ParsedString":null,"ReminderTemplate":0,"ShowCaptcha":0,"SurveyId":765277185,"SurveyName":"тестовый проект для тестирования тестов","SurveyRewards":"{\"91\":20}","SurveyState":4,"ValidationType":0}
   wait_time: 5
   xpctd_settings:
     url_template: https://qasawtooth.opinion.team/projects04/TestSurveyQA/cgi-bin/ciwweb.pl?studyname=TestSurveyQA&bfrid={token}
@@ -33,4 +35,4 @@ pr:
     project_manager: Бот
     category: Безалкогольные напитки
   xpctd_c_tmplt_settings:
-    new_c_tmplt_name: Nice collector template name
+    c_tmplt_name: new badass name

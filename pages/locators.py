@@ -18,14 +18,14 @@ class EditPageLocators:
     DEVICE_TYPE_SHOW_INPUT = "#rw_6_input .rw-widget-input"
     DEVICE_TYPE_SHOW_LIST_ITEM = "#rw_6_listbox li.rw-list-option"
     URL_TEMPLATE_INPUT = 'SurveyEngineTemplateUrl'
-    INNER_NAME_INPUT = 'InnerName'
-    NAME_INPUT = 'Name'
+    INNER_NAME_INPUT = 'input[name="InnerName"]'
+    NAME_INPUT = 'input[name="Name"]'
     TYPE_INPUT = '.form-group:nth-child(5) .inplace-editor .dropdown-toggle'
     TYPE_LIST_ITEM = '.form-group:nth-child(5) .dropdown-menu li'
     SYNC_TOGGLE = '.form-group:nth-child(7) .react-toggle'
     MULTILINKS_TOGGLE = '.form-group:nth-child(14) .react-toggle'
-    DESCRIPTION_INPUT = 'SurveyDescription'
-    COMMENTS_INPUT = 'Notes'
+    DESCRIPTION_INPUT = 'textarea[name="SurveyDescription"]'
+    COMMENTS_INPUT = 'textarea[name="Notes"]'
     CATEGORY_LIST = '.rw-multiselect button.rw-multiselect-tag-btn'
     CATEGORY_LIST_ITEM = '.rw-multiselect li'
     CATEGORY_LIST_ITEM_SELECTED = '.rw-multiselect li.rw-multiselect-tag'
@@ -40,3 +40,7 @@ class EditPageLocators:
     ADD_COLLECTOR_TEMPLATE_BUTTON = 'h3 + div.btn'
     COLLECTOR_TEMPLATE_NAME_INPUT = 'div.modal-body input'
     COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON = 'div.modal-body button.btn-primary'
+
+
+class CollectorTemplatePageLocators:
+    TEMPLATE_NAME_INPUT = '.col-lg-8 input.form-control'
