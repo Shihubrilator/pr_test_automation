@@ -3,7 +3,7 @@ import time
 import requests
 from pypom import Page
 from .locators import CollectorTemplatePageLocators as locators
-from .pr_fields import set_input, set_dropdown, is_changed_input, is_changed_dropdown
+from .pr_fields import set_input, set_dropdown, is_changed_input, is_changed_dropdown, set_checkbox, is_changed_checkbox
 import json
 
 
@@ -31,6 +31,9 @@ class CollectorTemplatePage(Page):
     def change_captcha(self, config):
         set_dropdown(self.driver, locators.TEMPLATE_CAPTCHA,
                      locators.TEMPLATE_CAPTCHA_LIST_ITEM, 1, config['pr']['wait_time'])
+
+    def change_allowduplicate(self, config):
+        set_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
         is_changed_input(self.driver, config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
@@ -60,6 +63,9 @@ class CollectorTemplatePage(Page):
         is_changed_dropdown(self.driver, locators.TEMPLATE_CAPTCHA,
                             config['pr']['default_c_template_settings']['captcha'],
                             config['pr']['xpctd_c_tmplt_settings']['captcha'], config['pr']['wait_time'])
+
+    def should_be_changed_allowduplicates(self, config):
+        is_changed_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
 
     def save_changes(self):
         self.driver.find_by_text('Сохранить')[0].click()

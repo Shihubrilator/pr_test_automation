@@ -54,3 +54,4 @@ class CollectorTemplatePageLocators:
     TEMPLATE_AUTOFILL_LIST_ITEM = 'div#rw_2_input li.rw-list-option'
     TEMPLATE_CAPTCHA = 'div#rw_3_input div.rw-input'
     TEMPLATE_CAPTCHA_LIST_ITEM = 'div#rw_3_input li.rw-list-option'
+    TEMPLATE_ALLOWDUPLICATES = 'input[name="AllowDuplicates"]'
