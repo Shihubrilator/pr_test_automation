@@ -32,14 +32,15 @@ def set_category(driver, category_list_locator, category_list_item_locator, wait
 
 
 def is_changed_dropdown(driver, dropdown_locator, default_text, xpctd_text, wait_time):
-    assert not driver.is_element_present_by_css(dropdown_locator + ' input[value="' + default_text + '"]',
-                                                wait_time), 'Dropdown is not changed'
-    assert driver.is_element_present_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]',
-                                            wait_time), 'Dropdown is not found'
+    assert not driver.is_element_present_by_css(dropdown_locator + ' input[value="' + default_text + '"]', wait_time), \
+        'Dropdown value "' + default_text + '" was found'
+    assert driver.is_element_present_by_css(dropdown_locator + ' input[value="' + xpctd_text + '"]', wait_time), \
+        'Dropdown value is "' + xpctd_text + '" was not found'
 
 
-def is_changed_input(driver, xpctd_text):
-    assert driver.is_element_present_by_value(xpctd_text), 'Input with text "' + xpctd_text + '" is not found'
+def is_changed_input(driver, xpctd_text, wait_time):
+    assert driver.is_element_present_by_value(xpctd_text, wait_time), \
+        'Input with text "' + xpctd_text + '" is not found'
 
 
 def is_changed_toggle(driver, toggle_locator, wait_time):

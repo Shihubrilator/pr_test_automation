@@ -98,22 +98,22 @@ class EditPage(Page):
                             config['pr']['xpctd_settings']['project_manager'], config['pr']['wait_time'])
 
     def should_be_changed_url_template(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['url_template'])
+        is_changed_input(self.driver, config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
 
     def should_be_changed_inner_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['inner_name'])
+        is_changed_input(self.driver, config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['name'])
+        is_changed_input(self.driver, config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
 
     def should_be_changed_sync(self, config):
         is_changed_toggle(self.driver, locators.SYNC_TOGGLE, config['pr']['wait_time'])
 
     def should_be_changed_description(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['description'])
+        is_changed_input(self.driver, config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
 
     def should_be_changed_comments(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['note'])
+        is_changed_input(self.driver, config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
 
     def should_be_changed_device_type(self, config):
         is_changed_dropdown(self.driver, locators.DEVICE_TYPE_INPUT,
@@ -147,7 +147,7 @@ class EditPage(Page):
     def set_default_project_settings(config, headers):
         request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
-        r =requests.put(url=request_url, headers=headers, data=payload)
+        requests.put(url=request_url, headers=headers, data=payload)
 
     @staticmethod
     def set_default_status_settings(config, headers):
@@ -184,5 +184,5 @@ class EditPage(Page):
     def add_collector_template(self, config):
         self.driver.find_by_css(locators.ADD_COLLECTOR_TEMPLATE_BUTTON, config['pr']['wait_time'])[0].click()
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT, config['pr']['wait_time']). \
-            type(config['pr']['xpctd_c_tmplt_settings']['new_c_tmplt_name'])
+            type(config['pr']['xpctd_c_tmplt_settings']['name'])
         self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON, config['pr']['wait_time']).click()

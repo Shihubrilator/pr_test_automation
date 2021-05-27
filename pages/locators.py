@@ -17,7 +17,7 @@ class EditPageLocators:
     DEVICE_TYPE_LIST_ITEM = "#rw_5_listbox li.rw-list-option"
     DEVICE_TYPE_SHOW_INPUT = "#rw_6_input .rw-widget-input"
     DEVICE_TYPE_SHOW_LIST_ITEM = "#rw_6_listbox li.rw-list-option"
-    URL_TEMPLATE_INPUT = 'SurveyEngineTemplateUrl'
+    URL_TEMPLATE_INPUT = 'textarea[name="SurveyEngineTemplateUrl"]'
     INNER_NAME_INPUT = 'input[name="InnerName"]'
     NAME_INPUT = 'input[name="Name"]'
     TYPE_INPUT = '.form-group:nth-child(5) .inplace-editor .dropdown-toggle'
@@ -46,3 +46,11 @@ class CollectorTemplatePageLocators:
     TEMPLATE_NAME_INPUT = '.col-lg-8 input.form-control'
     TEMPLATE_PANEL = 'div#rw_1_input div.rw-input'
     TEMPLATE_PANEL_LIST_ITEM = 'div#rw_1_input li.rw-list-option'
+    TEMPLATE_INVITATION = 'div#rw_4_input div.rw-input'
+    TEMPLATE_INVITATION_LIST_ITEM = 'div#rw_4_input li.rw-list-option'
+    TEMPLATE_REMINDER = 'div#rw_5_input div.rw-input'
+    TEMPLATE_REMINDER_LIST_ITEM = 'div#rw_5_input li.rw-list-option'
+    TEMPLATE_AUTOFILL = 'div#rw_2_input div.rw-input'
+    TEMPLATE_AUTOFILL_LIST_ITEM = 'div#rw_2_input li.rw-list-option'
+    TEMPLATE_CAPTCHA = 'div#rw_3_input div.rw-input'
+    TEMPLATE_CAPTCHA_LIST_ITEM = 'div#rw_3_input li.rw-list-option'

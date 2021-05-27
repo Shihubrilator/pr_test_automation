@@ -23,6 +23,10 @@ pr:
   default_c_template_settings_json: {"AllowDuplicates":false,"AutoFill":0,"Deleted":false,"ErrorMessage":null,"Id":768398738,"InvitationTemplate":0,"IsValid":true,"Name":"test_template","PanelId":1029695,"PanelName":"Экспертное мнение","ParsedString":null,"ReminderTemplate":0,"ShowCaptcha":0,"SurveyId":765277185,"SurveyName":"тестовый проект для тестирования тестов","SurveyRewards":"{\"91\":20}","SurveyState":4,"ValidationType":0}
   default_c_template_settings:
     panel: Экспертное мнение
+    invitation: По-умолчанию
+    reminder: По-умолчанию
+    autofill: Нет
+    captcha: Наследовать
   wait_time: 5
   xpctd_settings:
     url_template: https://qasawtooth.opinion.team/projects04/TestSurveyQA/cgi-bin/ciwweb.pl?studyname=TestSurveyQA&bfrid={token}
@@ -39,3 +43,7 @@ pr:
   xpctd_c_tmplt_settings:
     name: new badass name
     panel: BigPoll
+    invitation: Приглашение на опрос без мобильного
+    reminder: Повторное приглашение на опрос ребенка 15 - 17 лет
+    autofill: Да
+    captcha: Да
