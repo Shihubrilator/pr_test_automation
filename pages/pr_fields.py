@@ -1,4 +1,5 @@
 import time
+from selenium.webdriver.common.keys import Keys
 
 
 def set_dropdown(driver, input_locator, list_item_locator, li_number, wait_time):
@@ -8,9 +9,8 @@ def set_dropdown(driver, input_locator, list_item_locator, li_number, wait_time)
 
 
 def set_input(driver, input_locator, value, wait_time):
-    driver.find_by_css(input_locator, wait_time).first.click()
-    time.sleep(0.5)
-    driver.find_by_css(input_locator, wait_time).first.clear()
+    while len(driver.find_by_css(input_locator, wait_time).first.value) > 0:
+        driver.find_by_css(input_locator, wait_time).first.type(Keys.BACKSPACE)
     driver.find_by_css(input_locator, wait_time).first.fill(value)
 
 

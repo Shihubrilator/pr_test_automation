@@ -1,5 +1,4 @@
 import time
-
 import requests
 from pypom import Page
 from .locators import CollectorTemplatePageLocators as locators
@@ -36,7 +35,8 @@ class CollectorTemplatePage(Page):
         set_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
 
     def change_reward(self, config):
-        set_input(self.driver, locators.TEMPLATE_REWARD, '40', config['pr']['wait_time'])
+        set_input(self.driver, locators.TEMPLATE_REWARD,
+                  config['pr']['xpctd_c_tmplt_settings']['reward'], config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
         is_changed_input(self.driver, locators.TEMPLATE_NAME_INPUT,
@@ -72,7 +72,8 @@ class CollectorTemplatePage(Page):
         is_changed_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
 
     def should_be_changed_reward(self, config):
-        is_changed_input(self.driver, locators.TEMPLATE_REWARD, '40.00', config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.TEMPLATE_REWARD,
+                         str(config['pr']['xpctd_c_tmplt_settings']['reward']) + '.00', config['pr']['wait_time'])
 
     def save_changes(self):
         self.driver.find_by_text('Сохранить')[0].click()

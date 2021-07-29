@@ -47,3 +47,4 @@ pr:
     reminder: Повторное приглашение на опрос ребенка 15 - 17 лет
     autofill: Да
     captcha: Да
+    reward: 40
