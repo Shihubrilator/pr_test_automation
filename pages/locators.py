@@ -43,7 +43,7 @@ class EditPageLocators:
 
 
 class CollectorTemplatePageLocators:
-    TEMPLATE_NAME_INPUT = '.col-lg-8 input.form-control'
+    TEMPLATE_NAME_INPUT = 'h3 + div div label + div input'
     TEMPLATE_PANEL = 'div#rw_1_input div.rw-input'
     TEMPLATE_PANEL_LIST_ITEM = 'div#rw_1_input li.rw-list-option'
     TEMPLATE_INVITATION = 'div#rw_4_input div.rw-input'
@@ -55,3 +55,4 @@ class CollectorTemplatePageLocators:
     TEMPLATE_CAPTCHA = 'div#rw_3_input div.rw-input'
     TEMPLATE_CAPTCHA_LIST_ITEM = 'div#rw_3_input li.rw-list-option'
     TEMPLATE_ALLOWDUPLICATES = 'div.checkbox label'
+    TEMPLATE_REWARD = 'h3 + div h3 + div +div +div + div + div input'

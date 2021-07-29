@@ -35,8 +35,12 @@ class CollectorTemplatePage(Page):
     def change_allowduplicate(self, config):
         set_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
 
+    def change_reward(self, config):
+        set_input(self.driver, locators.TEMPLATE_REWARD, '40', config['pr']['wait_time'])
+
     def should_be_changed_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.TEMPLATE_NAME_INPUT,
+                         config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
 
     def should_be_changed_panel(self, config):
         is_changed_dropdown(self.driver, locators.TEMPLATE_PANEL,
@@ -66,6 +70,9 @@ class CollectorTemplatePage(Page):
 
     def should_be_changed_allowduplicates(self, config):
         is_changed_checkbox(self.driver, locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
+
+    def should_be_changed_reward(self, config):
+        is_changed_input(self.driver, locators.TEMPLATE_REWARD, '40.00', config['pr']['wait_time'])
 
     def save_changes(self):
         self.driver.find_by_text('Сохранить')[0].click()

@@ -81,12 +81,12 @@ class EditPage(Page):
     def should_be_not_changed_status_time(self, config):
         text = self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, config['pr']['wait_time']).text
         xpctd_text = '10'
-        assert text == xpctd_text, 'Status time is "' + text + '", but expected "' + xpctd_text + '"'
+        assert text == xpctd_text, 'Status time is "{}", but expected "{}"'.format(text, xpctd_text)
 
     def should_be_changed_status_time(self, config):
         text = self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_CELL, config['pr']['wait_time']).text
         xpctd_text = '20'
-        assert text == xpctd_text, 'Status time is "' + text + '", but expected "' + xpctd_text + '"'
+        assert text == xpctd_text, 'Status time is "{}", but expected "{}"'.format(text, xpctd_text)
 
     def should_be_changed_manager_name(self, config):
         is_changed_dropdown(self.driver, locators.MANAGER_INPUT, config['pr']['default_settings']['manager'],
@@ -98,22 +98,25 @@ class EditPage(Page):
                             config['pr']['xpctd_settings']['project_manager'], config['pr']['wait_time'])
 
     def should_be_changed_url_template(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.URL_TEMPLATE_INPUT,
+                         config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
 
     def should_be_changed_inner_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.INNER_NAME_INPUT,
+                         config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.NAME_INPUT,
+                         config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
 
     def should_be_changed_sync(self, config):
         is_changed_toggle(self.driver, locators.SYNC_TOGGLE, config['pr']['wait_time'])
 
     def should_be_changed_description(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.DESCRIPTION_INPUT, config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
 
     def should_be_changed_comments(self, config):
-        is_changed_input(self.driver, config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
+        is_changed_input(self.driver, locators.COMMENTS_INPUT, config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
 
     def should_be_changed_device_type(self, config):
         is_changed_dropdown(self.driver, locators.DEVICE_TYPE_INPUT,

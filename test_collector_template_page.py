@@ -47,3 +47,10 @@ def test_change_collector_template_allowduplicate(pr_collector_template_page, co
     pr_collector_template_page.save_changes()
     pr_collector_template_page.reload()
     pr_collector_template_page.should_be_changed_allowduplicates(config)
+
+
+def test_change_collector_template_reward(pr_collector_template_page, config):
+    pr_collector_template_page.change_reward(config)
+    pr_collector_template_page.save_changes()
+    pr_collector_template_page.reload()
+    pr_collector_template_page.should_be_changed_reward(config)
