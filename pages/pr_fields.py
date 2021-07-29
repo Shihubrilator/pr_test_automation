@@ -12,12 +12,12 @@ def set_input(driver, input_locator, value, wait_time):
     driver.find_by_css(input_locator, wait_time)[0].fill(value)
 
 
-def set_toggle(driver, toggle_locator, wait_time):
-    driver.find_by_css(toggle_locator, wait_time).click()
+def set_toggle(driver, locator, wait_time):
+    driver.find_by_css(locator, wait_time).click()
 
 
-def set_checkbox(driver, toggle_locator, wait_time):
-    driver.find_by_css(toggle_locator, wait_time).check()
+def set_checkbox(driver, locator, wait_time):
+    driver.find_by_css(locator, wait_time).click()
 
 
 def set_type(driver, type_input_locator, type_list_item_locator, type_list_item_locator_num, wait_time):
@@ -62,4 +62,5 @@ def is_changed_category(driver, selected_category_locator, xpctd_category, wait_
 
 
 def is_changed_checkbox(driver, locator, wait_time):
-    assert driver.find_by_css(locator, wait_time).checked
+    time.sleep(2)
+    assert driver.find_by_css(locator + ' input', wait_time)[0].checked, "Not checked"
