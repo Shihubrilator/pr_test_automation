@@ -6,71 +6,57 @@ import json
 
 
 class CollectorTemplatePage(BasePage):
-    def change_name(self, config):
-        self.set_input(locators.TEMPLATE_NAME_INPUT,
-                       config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
+    def change_name(self, xpctd_name, wt):
+        self.set_input(locators.TEMPLATE_NAME_INPUT, xpctd_name, wt)
 
-    def change_panel(self, config):
-        self.set_dropdown(locators.TEMPLATE_PANEL, locators.TEMPLATE_PANEL_LIST_ITEM, 4, config['pr']['wait_time'])
+    def change_panel(self, li_num, wt):
+        self.set_dropdown(locators.TEMPLATE_PANEL, locators.TEMPLATE_PANEL_LIST_ITEM, li_num, wt)
 
-    def change_invitation(self, config):
-        self.set_dropdown(locators.TEMPLATE_INVITATION,
-                     locators.TEMPLATE_INVITATION_LIST_ITEM, 1, config['pr']['wait_time'])
+    def change_invitation(self, li_num, wt):
+        self.set_dropdown(locators.TEMPLATE_INVITATION, locators.TEMPLATE_INVITATION_LIST_ITEM, li_num, wt)
 
-    def change_reminder(self, config):
-        self.set_dropdown(locators.TEMPLATE_REMINDER,
-                     locators.TEMPLATE_REMINDER_LIST_ITEM, 1, config['pr']['wait_time'])
+    def change_reminder(self, li_num, wt):
+        self.set_dropdown(locators.TEMPLATE_REMINDER, locators.TEMPLATE_REMINDER_LIST_ITEM, li_num, wt)
 
-    def change_autofill(self, config):
-        self.set_dropdown(locators.TEMPLATE_AUTOFILL,
-                     locators.TEMPLATE_AUTOFILL_LIST_ITEM, 1, config['pr']['wait_time'])
+    def change_autofill(self, li_num, wt):
+        self.set_dropdown(locators.TEMPLATE_AUTOFILL, locators.TEMPLATE_AUTOFILL_LIST_ITEM, li_num, wt)
 
-    def change_captcha(self, config):
-        self.set_dropdown(locators.TEMPLATE_CAPTCHA,
-                     locators.TEMPLATE_CAPTCHA_LIST_ITEM, 1, config['pr']['wait_time'])
+    def change_captcha(self, li_num, wt):
+        self.set_dropdown(locators.TEMPLATE_CAPTCHA, locators.TEMPLATE_CAPTCHA_LIST_ITEM, li_num, wt)
 
-    def change_allowduplicate(self, config):
-        self.set_checkbox(locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
+    def change_allowduplicate(self, wt):
+        self.set_checkbox(locators.TEMPLATE_ALLOWDUPLICATES, wt)
 
-    def change_reward(self, config):
-        self.set_input(locators.TEMPLATE_REWARD,
-                  config['pr']['xpctd_c_tmplt_settings']['reward'], config['pr']['wait_time'])
+    def change_reward(self, xpctd_reward, wt):
+        self.set_input(locators.TEMPLATE_REWARD, xpctd_reward, wt)
 
-    def should_be_changed_name(self, config):
-        self.is_changed_input(locators.TEMPLATE_NAME_INPUT,
-                         config['pr']['xpctd_c_tmplt_settings']['name'], config['pr']['wait_time'])
+    def should_be_changed_name(self, xpctd_name, wt):
+        self.is_changed_input(locators.TEMPLATE_NAME_INPUT, xpctd_name, wt)
 
-    def should_be_changed_panel(self, config):
-        self.is_changed_dropdown(locators.TEMPLATE_PANEL, config['pr']['default_c_template_settings']['panel'],
-                                 config['pr']['xpctd_c_tmplt_settings']['panel'], config['pr']['wait_time'])
+    def should_be_changed_panel(self, dflt_panel, xpctd_panel, wt):
+        self.is_changed_dropdown(locators.TEMPLATE_PANEL, dflt_panel, xpctd_panel, wt)
 
-    def should_be_changed_invitation(self, config):
-        self.is_changed_dropdown(locators.TEMPLATE_INVITATION,
-                            config['pr']['default_c_template_settings']['invitation'],
-                            config['pr']['xpctd_c_tmplt_settings']['invitation'], config['pr']['wait_time'])
+    def should_be_changed_invitation(self, dflt_invitation, xpctd_invitation, wt):
+        self.is_changed_dropdown(locators.TEMPLATE_INVITATION, dflt_invitation, xpctd_invitation, wt)
 
-    def should_be_changed_reminder(self, config):
-        self.is_changed_dropdown(locators.TEMPLATE_REMINDER, config['pr']['default_c_template_settings']['reminder'],
-                                 config['pr']['xpctd_c_tmplt_settings']['reminder'], config['pr']['wait_time'])
+    def should_be_changed_reminder(self, dflt_reminder, xpctd_reminder, wt):
+        self.is_changed_dropdown(locators.TEMPLATE_REMINDER, dflt_reminder, xpctd_reminder, wt)
 
-    def should_be_changed_autofill(self, config):
-        self.is_changed_dropdown(locators.TEMPLATE_AUTOFILL, config['pr']['default_c_template_settings']['autofill'],
-                                 config['pr']['xpctd_c_tmplt_settings']['autofill'], config['pr']['wait_time'])
+    def should_be_changed_autofill(self, dflt_autofill, xpctd_autofill, wt):
+        self.is_changed_dropdown(locators.TEMPLATE_AUTOFILL, dflt_autofill, xpctd_autofill, wt)
 
-    def should_be_changed_captcha(self, config):
+    def should_be_changed_captcha(self, dflt_captcha, xpctd_captcha, wt):
         time.sleep(2)
-        self.is_changed_dropdown(locators.TEMPLATE_CAPTCHA, config['pr']['default_c_template_settings']['captcha'],
-                                 config['pr']['xpctd_c_tmplt_settings']['captcha'], config['pr']['wait_time'])
+        self.is_changed_dropdown(locators.TEMPLATE_CAPTCHA, dflt_captcha, xpctd_captcha, wt)
 
-    def should_be_changed_allowduplicates(self, config):
-        self.is_changed_checkbox(locators.TEMPLATE_ALLOWDUPLICATES, config['pr']['wait_time'])
+    def should_be_changed_allowduplicates(self, wt):
+        self.is_changed_checkbox(locators.TEMPLATE_ALLOWDUPLICATES, wt)
 
-    def should_be_changed_reward(self, config):
-        self.is_changed_input(locators.TEMPLATE_REWARD,
-                              str(config['pr']['xpctd_c_tmplt_settings']['reward']) + '.00', config['pr']['wait_time'])
+    def should_be_changed_reward(self, xpctd_reward, wt):
+        self.is_changed_input(locators.TEMPLATE_REWARD, '{}.00'.format(xpctd_reward), wt)
 
     def save_changes(self):
-        self.driver.find_by_text('Сохранить')[0].click()
+        self.driver.find_by_text('Сохранить').first.click()
 
     def reload(self):
         self.driver.reload()
