@@ -45,7 +45,7 @@ class BasePage(Page):
         assert self.driver.is_element_present_by_css(toggle_locator + '--checked', wait_time), \
             'Element "{} --checked" is not found'.format(toggle_locator)
 
-    def is_changed_type(self, xpctd_type, wait_time):
+    def is_changed_type(self, xpctd_type, wait_time): #переделать на проверку текста в элементе
         assert self.driver.is_element_present_by_text(xpctd_type, wait_time), 'Type is not changed'
 
     def is_changed_category(self, selected_category_locator, xpctd_category, wait_time):
