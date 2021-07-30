@@ -1,4 +1,4 @@
-def test_changed_manager_name(pr_edit_page, config):
+def test_changed_manager(pr_edit_page, config):
     pr_edit_page.change_manager(4, config['pr']['wait_time'])
     pr_edit_page.save_project_changes()
     pr_edit_page.reload()
@@ -7,7 +7,7 @@ def test_changed_manager_name(pr_edit_page, config):
                                                 config['pr']['wait_time'])
 
 
-def test_changed_project_manager_name(pr_edit_page, config):
+def test_changed_project_manager(pr_edit_page, config):
     pr_edit_page.change_project_manager(4, config['pr']['wait_time'])
     pr_edit_page.save_project_changes()
     pr_edit_page.reload()
