@@ -67,7 +67,7 @@ class EditPage(BasePage):
         self.is_changed_category(locators.CATEGORY_LIST_ITEM_SELECTED, xpctd_category, wt)
 
     def should_be_changed_type(self, xpctd_type, wt):
-        self.is_changed_type(xpctd_type, wt)
+        self.is_changed_type(locators.TYPE_INPUT, xpctd_type, wt)
 
     def should_not_be_changed_status_time(self, xpctd_text, wt):
         text = self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, wt).text
