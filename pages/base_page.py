@@ -33,7 +33,7 @@ class BasePage(Page):
 
     def is_changed_dropdown(self, dropdown_locator, default_text, xpctd_text, wait_time):
         assert not self.driver.is_element_present_by_css('{} input[value="{}"]'.format(dropdown_locator, default_text),
-                                                    wait_time), 'Dropdown value "{}" was found'.format(default_text)
+                                                        wait_time), 'Dropdown value "{}" was found'.format(default_text)
         assert self.driver.is_element_present_by_css('{} input[value="{}"]'.format(dropdown_locator, xpctd_text),
                                                 wait_time), 'Dropdown value is "{}" was not found'.format(xpctd_text)
 
