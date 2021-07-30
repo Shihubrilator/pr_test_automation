@@ -1,58 +1,55 @@
-from pypom import Page
+from .base_page import BasePage
 from .locators import EditPageLocators as locators
+from selenium.webdriver.common.keys import Keys
 import requests
 import json
-from selenium.webdriver.common.keys import Keys
-from .pr_fields import *
+import time
 
 
-class EditPage(Page):
+class EditPage(BasePage):
     def change_type(self, config):
-        set_type(self.driver, locators.TYPE_INPUT, locators.TYPE_LIST_ITEM, 2, config['pr']['wait_time'])
+        self.set_type(locators.TYPE_INPUT, locators.TYPE_LIST_ITEM, 2, config['pr']['wait_time'])
 
     def change_category(self, config):
-        set_category(self.driver, locators.CATEGORY_LIST, locators.CATEGORY_LIST_ITEM, config['pr']['wait_time'])
+        self.set_category(locators.CATEGORY_LIST, locators.CATEGORY_LIST_ITEM, config['pr']['wait_time'])
 
     def change_manager(self, config):
-        set_dropdown(self.driver, locators.MANAGER_INPUT, locators.MANAGER_LIST_ITEM, 4, config['pr']['wait_time'])
+        self.set_dropdown(locators.MANAGER_INPUT, locators.MANAGER_LIST_ITEM, 4, config['pr']['wait_time'])
 
     def change_project_manager(self, config):
-        set_dropdown(self.driver, locators.PROJECT_MANAGER_INPUT,
-                     locators.PROJECT_MANAGER_LIST_ITEM, 4, config['pr']['wait_time'])
+        self.set_dropdown(locators.PROJECT_MANAGER_INPUT,
+                          locators.PROJECT_MANAGER_LIST_ITEM, 4, config['pr']['wait_time'])
 
     def change_template_url(self, config):
-        set_input(self.driver, locators.URL_TEMPLATE_INPUT,
-                  config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
+        self.set_input(locators.URL_TEMPLATE_INPUT,
+                       config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
 
     def change_inner_name(self, config):
-        set_input(self.driver, locators.INNER_NAME_INPUT,
-                  config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
+        self.set_input(locators.INNER_NAME_INPUT,
+                       config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
 
     def change_name(self, config):
-        set_input(self.driver, locators.NAME_INPUT,
-                  config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
+        self.set_input(locators.NAME_INPUT, config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
 
     def change_sync(self, config):
-        set_toggle(self.driver, locators.SYNC_TOGGLE, config['pr']['wait_time'])
+        self.set_toggle(locators.SYNC_TOGGLE, config['pr']['wait_time'])
 
     def change_description(self, config):
-        set_input(self.driver, locators.DESCRIPTION_INPUT,
-                  config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
+        self.set_input(locators.DESCRIPTION_INPUT,
+                       config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
 
     def change_comments(self, config):
-        set_input(self.driver, locators.COMMENTS_INPUT,
-                  config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
+        self.set_input(locators.COMMENTS_INPUT, config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
 
     def change_device_type(self, config):
-        set_dropdown(self.driver, locators.DEVICE_TYPE_INPUT,
-                     locators.DEVICE_TYPE_LIST_ITEM, 1, config['pr']['wait_time'])
+        self.set_dropdown(locators.DEVICE_TYPE_INPUT, locators.DEVICE_TYPE_LIST_ITEM, 1, config['pr']['wait_time'])
 
     def change_device_type_show(self, config):
-        set_dropdown(self.driver, locators.DEVICE_TYPE_SHOW_INPUT,
-                     locators.DEVICE_TYPE_SHOW_LIST_ITEM, 2, config['pr']['wait_time'])
+        self.set_dropdown(locators.DEVICE_TYPE_SHOW_INPUT,
+                          locators.DEVICE_TYPE_SHOW_LIST_ITEM, 2, config['pr']['wait_time'])
 
     def change_multilinks(self, config):
-        set_toggle(self.driver, locators.MULTILINKS_TOGGLE, config['pr']['wait_time'])
+        self.set_toggle(locators.MULTILINKS_TOGGLE, config['pr']['wait_time'])
 
     def change_status_time_and_cancel(self, config):
         self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, config['pr']['wait_time']).click()
@@ -72,11 +69,11 @@ class EditPage(Page):
         self.driver.find_by_css(locators.STATUS_SAVE_CHANGES, config['pr']['wait_time']).click()
 
     def should_be_changed_category(self, config):
-        is_changed_category(self.driver, locators.CATEGORY_LIST_ITEM_SELECTED,
-                            config['pr']['xpctd_settings']['category'], config['pr']['wait_time'])
+        self.is_changed_category(locators.CATEGORY_LIST_ITEM_SELECTED,
+                                 config['pr']['xpctd_settings']['category'], config['pr']['wait_time'])
 
     def should_be_changed_type(self, config):
-        is_changed_type(self.driver, config['pr']['xpctd_settings']['type'], config['pr']['wait_time'])
+        self.is_changed_type(config['pr']['xpctd_settings']['type'], config['pr']['wait_time'])
 
     def should_be_not_changed_status_time(self, config):
         text = self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, config['pr']['wait_time']).text
@@ -89,47 +86,46 @@ class EditPage(Page):
         assert text == xpctd_text, 'Status time is "{}", but expected "{}"'.format(text, xpctd_text)
 
     def should_be_changed_manager_name(self, config):
-        is_changed_dropdown(self.driver, locators.MANAGER_INPUT, config['pr']['default_settings']['manager'],
-                            config['pr']['xpctd_settings']['manager'], config['pr']['wait_time'])
+        self.is_changed_dropdown(locators.MANAGER_INPUT, config['pr']['default_settings']['manager'],
+                                 config['pr']['xpctd_settings']['manager'], config['pr']['wait_time'])
 
     def should_be_changed_project_manager_name(self, config):
-        is_changed_dropdown(self.driver, locators.PROJECT_MANAGER_INPUT,
-                            config['pr']['default_settings']['project_manager'],
-                            config['pr']['xpctd_settings']['project_manager'], config['pr']['wait_time'])
+        self.is_changed_dropdown(locators.PROJECT_MANAGER_INPUT, config['pr']['default_settings']['project_manager'],
+                                 config['pr']['xpctd_settings']['project_manager'], config['pr']['wait_time'])
 
     def should_be_changed_url_template(self, config):
-        is_changed_input(self.driver, locators.URL_TEMPLATE_INPUT,
-                         config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
+        self.is_changed_input(locators.URL_TEMPLATE_INPUT,
+                              config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
 
     def should_be_changed_inner_name(self, config):
-        is_changed_input(self.driver, locators.INNER_NAME_INPUT,
-                         config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
+        self.is_changed_input(locators.INNER_NAME_INPUT,
+                              config['pr']['xpctd_settings']['inner_name'], config['pr']['wait_time'])
 
     def should_be_changed_name(self, config):
-        is_changed_input(self.driver, locators.NAME_INPUT,
-                         config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
+        self.is_changed_input(locators.NAME_INPUT, config['pr']['xpctd_settings']['name'], config['pr']['wait_time'])
 
     def should_be_changed_sync(self, config):
-        is_changed_toggle(self.driver, locators.SYNC_TOGGLE, config['pr']['wait_time'])
+        self.is_changed_toggle(locators.SYNC_TOGGLE, config['pr']['wait_time'])
 
     def should_be_changed_description(self, config):
-        is_changed_input(self.driver, locators.DESCRIPTION_INPUT, config['pr']['xpctd_settings']['description'], config['pr']['wait_time'])
+        self.is_changed_input(locators.DESCRIPTION_INPUT, config['pr']['xpctd_settings']['description'],
+                              config['pr']['wait_time'])
 
     def should_be_changed_comments(self, config):
-        is_changed_input(self.driver, locators.COMMENTS_INPUT, config['pr']['xpctd_settings']['note'], config['pr']['wait_time'])
+        self.is_changed_input(locators.COMMENTS_INPUT, config['pr']['xpctd_settings']['note'],
+                              config['pr']['wait_time'])
 
     def should_be_changed_device_type(self, config):
-        is_changed_dropdown(self.driver, locators.DEVICE_TYPE_INPUT,
-                            config['pr']['default_settings']['device_type_text'],
-                            config['pr']['xpctd_settings']['device_type_text'], config['pr']['wait_time'])
+        self.is_changed_dropdown(locators.DEVICE_TYPE_INPUT, config['pr']['default_settings']['device_type_text'],
+                                 config['pr']['xpctd_settings']['device_type_text'], config['pr']['wait_time'])
 
     def should_be_changed_device_type_show(self, config):
-        is_changed_dropdown(self.driver, locators.DEVICE_TYPE_SHOW_INPUT,
-                            config['pr']['default_settings']['device_type_show_text'],
-                            config['pr']['xpctd_settings']['device_type_show_text'], config['pr']['wait_time'])
+        self.is_changed_dropdown(locators.DEVICE_TYPE_SHOW_INPUT,
+                                 config['pr']['default_settings']['device_type_show_text'],
+                                 config['pr']['xpctd_settings']['device_type_show_text'], config['pr']['wait_time'])
 
     def should_be_changed_multilink(self, config):
-        is_changed_toggle(self.driver, locators.MULTILINKS_TOGGLE, config['pr']['wait_time'])
+        self.is_changed_toggle(locators.MULTILINKS_TOGGLE, config['pr']['wait_time'])
 
     def should_be_collector_template_url(self):
         time.sleep(1)
