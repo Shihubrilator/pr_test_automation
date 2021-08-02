@@ -47,6 +47,7 @@ class EditPage(BasePage):
         self.set_toggle(locators.MULTILINKS_TOGGLE, wt)
 
     def change_status_time_and_cancel(self, value, wt):
+        self.async_wait(self.driver.find_by_css, 'h3 a')
         self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_CELL, wt).click()
         self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT_SHOW, wt).click()
         self.driver.find_by_css(locators.COMPLETE_AVERAGE_TIME_INPUT, wt).type(Keys.BACKSPACE)
@@ -56,6 +57,7 @@ class EditPage(BasePage):
         self.driver.find_by_css(locators.STATUS_CANCEL_CHANGES, wt).click()
 
     def change_status_time(self, value, wt):
+        self.async_wait(self.driver.find_by_css, 'h3 a')
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_CELL, wt).click()
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_INPUT_SHOW, wt).click()
         self.driver.find_by_css(locators.SCREENOUT_AVERAGE_TIME_INPUT, wt).type(Keys.BACKSPACE)
@@ -164,6 +166,7 @@ class EditPage(BasePage):
             requests.delete(url=request_url, headers=headers)
 
     def add_collector_template(self, tmplt_name, wt):
-        self.driver.find_by_css(locators.ADD_COLLECTOR_TEMPLATE_BUTTON, ).first.click()
-        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT, wt).type(tmplt_name)
-        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON, wt).click()
+        self.async_wait(self.driver.find_by_css, 'h3 a')
+        self.driver.find_by_css(locators.ADD_COLLECTOR_TEMPLATE_BUTTON).first.click()
+        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_INPUT).type(tmplt_name)
+        self.driver.find_by_css(locators.COLLECTOR_TEMPLATE_NAME_CONFIRM_BUTTON).click()
