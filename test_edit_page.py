@@ -16,7 +16,7 @@ def test_changed_project_manager(pr_edit_page, config):
                                                         config['pr']['wait_time'])
 
 
-def test_changed_url_template(pr_edit_page, config):#
+def test_changed_url_template(pr_edit_page, config):
     pr_edit_page.change_template_url(config['pr']['xpctd_settings']['url_template'], config['pr']['wait_time'])
     pr_edit_page.save_project_changes()
     pr_edit_page.reload()
