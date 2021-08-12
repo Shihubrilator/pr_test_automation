@@ -122,20 +122,20 @@ class EditPage(BasePage):
     def reload(self):
         self.driver.reload()
 
-    def set_default_settings(self, headers, config):
-        self.set_default_project_settings(config, headers)
-        self.set_default_status_settings(config, headers)
-        self.delete_last_collector_template(config, headers)
+    def set_default_settings(self, headers, config, server):
+        self.set_default_project_settings(server, config, headers)
+        self.set_default_status_settings(server, config, headers)
+        self.delete_last_collector_template(server, config, headers)
 
     @staticmethod
-    def set_default_project_settings(config, headers):
-        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
+    def set_default_project_settings(server, config, headers):
+        request_url = config['pr'][server + '_url'] + 'api/v2/admin/panel/0/survey/' + str(config['pr']['project_id'])
         payload = json.dumps(config['pr']['default_settings_json'])
         requests.put(url=request_url, headers=headers, data=payload)
 
     @staticmethod
-    def set_default_status_settings(config, headers):
-        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/survey/' + \
+    def set_default_status_settings(server, config, headers):
+        request_url = config['pr'][server + '_url'] + 'api/v2/admin/panel/0/survey/' + \
                       str(config['pr']['project_id']) + '/SurveyFinishStatus'
         payload = {
             'AverageTime': '',
@@ -152,17 +152,17 @@ class EditPage(BasePage):
         requests.put(url=request_url, headers=additional_headers, data=payload)
 
     @staticmethod
-    def delete_last_collector_template(config, headers):
+    def delete_last_collector_template(server, config, headers):
         param = {
             'page': 1,
             'pageSize': 20,
             'filter': 'Deleted~eq~false~and~SurveyId~eq~' + str(config['pr']['project_id'])
         }
-        request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectorTemplates'
+        request_url = config['pr'][server + '_url'] + 'api/v2/admin/panel/0/collectorTemplates'
         r = requests.get(url=request_url, headers=headers, params=param)
         data = r.json()['Data']
         if len(data) > 1:
-            request_url = config['pr']['url'] + 'api/v2/admin/panel/0/collectortemplates/' + str(data[0]['Id'])
+            request_url = config['pr'][server + '_url'] + 'api/v2/admin/panel/0/collectortemplates/' + str(data[0]['Id'])
             requests.delete(url=request_url, headers=headers)
 
     def add_collector_template(self, tmplt_name, wt):

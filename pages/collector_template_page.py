@@ -62,8 +62,9 @@ class CollectorTemplatePage(BasePage):
         self.driver.reload()
 
     @staticmethod
-    def set_default_c_template_settings(headers, config):
-        request_url = config['pr']['url'] + \
+    def set_default_c_template_settings(server, headers, config):
+        #server = request.config.getoption('server')
+        request_url = config['pr'][server + '_url'] + \
                       'api/v2/admin/panel/0/collectortemplates/' + str(config['pr']['c_template_id'])
         data = json.dumps(config['pr']['default_c_template_settings_json'])
         requests.patch(url=request_url, headers=headers, data=data)

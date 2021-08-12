@@ -25,6 +25,7 @@ class BasePage(Page):
     def set_dropdown(self, input_locator, list_item_locator, li_number, wait_time):
         self.async_wait(self.driver.find_by_css, 'h3 a')
         self.driver.find_by_css(input_locator).first.click()
+        # по хорошему нужно научиться отслеживать анимацию появления списка
         time.sleep(0.5)
         self.driver.find_by_css(list_item_locator)[li_number].click()
 

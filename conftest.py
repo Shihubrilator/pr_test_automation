@@ -15,6 +15,8 @@ import pyodbc
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome or firefox")
+    parser.addoption('--server', action='store', default='dev',
+                     help="Choose server: qa or dev")
 
 
 @pytest.fixture(scope="module")
@@ -39,13 +41,8 @@ def get_config():
         return yaml.load(ymlfile, Loader=yaml.FullLoader)
 
 
-def get_db_connect():
-    config = get_config()
-    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
-                          'SERVER=' + config['sqldb']['host'] + ';'
-                          'DATABASE=' + config['sqldb']['db'] + ';'
-                          'UID=' + config['sqldb']['user'] + ';'
-                          'PWD=' + str(config['sqldb']['passwd']))
+def get_db_connect(connection_string):
+    conn = pyodbc.connect(connection_string)
     return conn
 
 
@@ -55,9 +52,10 @@ def config():
 
 
 @pytest.fixture(scope='session')
-def login(config):
+def login(request, config):
     """получение куки авторизации"""
-    request_url = config['pr']['url'] + 'api/v2/admin/panel/0/login'
+    server = request.config.getoption('server')
+    request_url = config['pr'][server + '_url'] + 'api/v2/admin/panel/0/login'
     payload = json.dumps({'Email': config['pr']['login'], 'Password': config['pr']['passwd']})
     headers = {'Accept': config['pr']['headers']['accept'],
                'Content-Type': config['pr']['headers']['content_type']}
@@ -73,30 +71,34 @@ def pr_headers(login, config):
 
 
 @pytest.fixture(scope='module')
-def pr_edit_page(browser, config, pr_headers):
-    url = config['pr']['project_url']
+def pr_edit_page(request, browser, config, pr_headers):
+    server = request.config.getoption('server')
+    url = config['pr'][server + '_url'] + 'admin/projects/' + str(config['pr']['project_id'])
     login_page = LoginPage(driver=browser, base_url=url)
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = EditPage(driver=browser, base_url=url)
     yield page
-    page.set_default_settings(pr_headers, config)
+    page.set_default_settings(pr_headers, config, server)
 
 
 @pytest.fixture(scope='module')
-def pr_collector_template_page(browser, config, pr_headers):
-    url = config['pr']['project_url'] + '/collectortemplates/' + str(config['pr']['c_template_id'])
+def pr_collector_template_page(request, browser, config, pr_headers):
+    server = request.config.getoption('server')
+    url = config['pr'][server + '_url'] + 'admin/projects/' + str(config['pr']['project_id']) + \
+          '/collectortemplates/' + str(config['pr']['c_template_id'])
     login_page = LoginPage(driver=browser, base_url=url)
     login_page.open()
     login_page.login(config['pr']['login'], config['pr']['passwd'])
     page = CollectorTemplatePage(driver=browser, base_url=url)
     yield page
-    page.set_default_c_template_settings(pr_headers, config)
+    page.set_default_c_template_settings(server, pr_headers, config)
 
 
 @pytest.fixture(scope='session')
-def conn():
-    c = get_db_connect()
+def conn(request):
+    server = request.config.getoption('server')
+    c = get_db_connect(config['sqldb'][server + '_connection_string'])
     yield c
     c.close()
 

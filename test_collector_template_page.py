@@ -6,14 +6,14 @@ def test_change_collector_template_name(pr_collector_template_page, config):
                                                       config['pr']['wait_time'])
 
 
-def test_change_collector_template_panel(pr_collector_template_page, config, pr_headers):
+def test_change_collector_template_panel(pr_collector_template_page, config, pr_headers, request):
     pr_collector_template_page.change_panel(4, config['pr']['wait_time'])
     pr_collector_template_page.save_changes()
     pr_collector_template_page.reload()
     pr_collector_template_page.should_be_changed_panel(config['pr']['default_c_template_settings']['panel'],
                                                        config['pr']['xpctd_c_tmplt_settings']['panel'],
                                                        config['pr']['wait_time'])
-    pr_collector_template_page.set_default_c_template_settings(pr_headers, config)
+    pr_collector_template_page.set_default_c_template_settings(request.config.getoption('server'), pr_headers, config)
     pr_collector_template_page.reload()
 
 
